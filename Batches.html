@@ -1,0 +1,338 @@
+<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GET APKS - Batches</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* Base styles */
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to bottom, #f5f0ff, #ffffff);
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    header {
+      background-color: #8e2de2;
+      background-image: linear-gradient(45deg, #8e2de2, #4a00e0);
+      color: white;
+      padding: 15px 20px;
+      font-size: 26px;
+      font-weight: 800;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(142,45,226,0.3);
+    }
+
+    #tags {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      background: #fff;
+      padding: 10px 0;
+      gap: 10px;
+    }
+
+    .tag {
+      background: #f0e6ff;
+      padding: 8px 15px;
+      border-radius: 20px;
+      font-weight: 600;
+      color: #5a189a;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .tag:hover {
+      background: #d0b3ff;
+      color: #3c096c;
+    }
+
+    #search-bar {
+      width: 90%;
+      margin: 20px auto;
+      display: block;
+      padding: 12px;
+      border: 2px solid #d6b3ff;
+      border-radius: 12px;
+      font-size: 16px;
+      outline: none;
+      background: #faf5ff;
+    }
+
+    .batch-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 20px;
+      gap: 20px;
+    }
+
+    .batch-card {
+      background: #ffffff;
+      border-radius: 15px;
+      overflow: hidden;
+      width: 320px;
+      box-shadow: 0px 4px 20px rgba(155, 89, 182, 0.2);
+      text-align: center;
+      position: relative;
+      transition: 0.4s;
+    }
+
+    .batch-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0px 8px 25px rgba(155, 89, 182, 0.4);
+    }
+
+    .batch-thumbnail {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+    }
+
+    .batch-title {
+      font-size: 18px;
+      font-weight: 600;
+      padding: 10px;
+      color: #5a189a;
+    }
+
+    .button {
+      background: linear-gradient(45deg, #8e2de2, #4a00e0);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 30px;
+      font-weight: 600;
+      text-decoration: none;
+      margin: 10px auto 20px;
+      display: inline-block;
+      transition: 0.3s;
+    }
+
+    .button:hover {
+      background: linear-gradient(45deg, #9d4edd, #7b2cbf);
+    }
+
+    .badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: #8e2de2;
+      color: white;
+      padding: 5px 10px;
+      font-size: 12px;
+      border-radius: 10px;
+    }
+
+    /* Loader */
+    #loader {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(255, 255, 255, 0.95);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      flex-direction: column;
+    }
+
+    .spinner-box {
+      position: relative;
+      width: 120px;
+      height: 120px;
+    }
+
+    .configure-border-1, .configure-border-2 {
+      width: 120px;
+      height: 120px;
+      padding: 3px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      background: linear-gradient(45deg, #9d4edd, #b983ff, #8e2de2, #c77dff);
+      background-size: 300% 300%;
+      animation: gradientMove 6s ease infinite, configure-clockwise 3s ease-in-out infinite alternate;
+      border-radius: 50%;
+    }
+    .configure-border-2 {
+      transform: rotate(45deg);
+      animation: gradientMove 6s ease infinite, configure-xclockwise 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    @keyframes configure-clockwise {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    @keyframes configure-xclockwise {
+      0% { transform: rotate(45deg); }
+      100% { transform: rotate(-315deg); }
+    }
+
+    .configure-core {
+      width: 100%;
+      height: 100%;
+      background-color: #ffffff;
+      border-radius: 50%;
+    }
+
+    .loading-text {
+      margin-top: 20px;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #6a0dad;
+    }
+
+    /* SNOW ANIMATION */
+    .snowflake {
+      position: fixed;
+      top: -10px;
+      color: white;
+      font-size: 20px;
+      pointer-events: none;
+      user-select: none;
+      z-index: 100;
+      animation-name: fall;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(0) translateX(0);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh) translateX(50px);
+        opacity: 0;
+      }
+    }
+  </style>
+
+</head>
+
+<body>
+
+<header>GET APKS - Batches</header>
+
+<div id="tags">
+  <div class="tag" onclick="filterBatches('all')">All</div>
+  <div class="tag" onclick="filterBatches('9')">Class 9</div>
+  <div class="tag" onclick="filterBatches('10')">Class 10</div>
+  <div class="tag" onclick="filterBatches('11')">Class 11</div>
+  <div class="tag" onclick="filterBatches('12')">Class 12</div>
+</div>
+
+<input type="text" id="search-bar" placeholder="Search Batches..." onkeyup="searchBatches()">
+
+<div class="batch-container" id="batchContainer">
+
+  <!-- Example Batch -->
+  <div class="batch-card" data-class="9th">
+    <div class="badge">Active</div>
+    <img src="images/401500133113-aarambh-class-9th-banner-app.png" class="batch-thumbnail">
+    <div class="batch-title">Aarambh Batch 9th</div>
+    <a href="#" class="button" onclick="showLoader(event, 'Aarambh9th.html')">LET'S START</a>
+  </div>
+
+  <div class="batch-card" data-class="10th">
+    <div class="badge">v Active</div>
+    <img src="images/IMG-20250225-201659-071.jpg" class="batch-thumbnail">
+    <div class="batch-title">Aarambh batch 10th</div>
+    <a href="#" class="button" onclick="showLoader(event, 'Aarambhclasses.html')">LET'S START</a>
+  </div>
+
+  <div class="batch-card" data-class="11TH">
+    <div class="badge">Hot</div>
+    <img src="images/PA-Science-2.jpg" class="batch-thumbnail">
+    <div class="batch-title">Prarambh PCMB</div>
+    <a href="#" class="button" onclick="showLoader(event, 'Prarambhscience.html')">Let's Start</a>
+  </div>
+  <div class="batch-card" data-class="11TH">
+    <div class="badge">Hot</div>
+    <img src="images/PA-Comm-1.jpg" class="batch-thumbnail">
+    <div class="batch-title">Prarambh Commerce</div>
+    <a href="#" class="button" onclick="showLoader(event, 'Prarambhcommerce.html')">Let's Start</a>
+  </div>
+  <div class="batch-card" data-class="11TH">
+    <div class="badge">New</div>
+    <img src="images/407786128517-11th-prarambh-hum-app-final-3499-1.jpg" class="batch-thumbnail">
+    <div class="batch-title">Prarambh Humanities</div>
+    <a href="#" class="button" onclick="showLoader(event, 'Prarambharts.html')">Let's Start</a>
+  </div>
+</div>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="spinner-box">
+    <div class="configure-border-1">
+      <div class="configure-core"></div>
+    </div>
+    <div class="configure-border-2">
+      <div class="configure-core"></div>
+    </div>
+  </div>
+  <div class="loading-text">Loading...</div>
+</div>
+
+<!-- Snowflakes -->
+<script>
+for (let i = 0; i < 50; i++) {
+  const snowflake = document.createElement('div');
+  snowflake.className = 'snowflake';
+  snowflake.style.left = Math.random() * window.innerWidth + 'px';
+  snowflake.style.animationDuration = (Math.random() * 3 + 2) + 's';
+  snowflake.style.animationDelay = Math.random() * 5 + 's';
+  snowflake.style.fontSize = (Math.random() * 10 + 10) + 'px';
+  snowflake.innerHTML = '❄';
+  document.body.appendChild(snowflake);
+}
+</script><div class="snowflake" style="left: 58.1682px; animation-duration: 2.57347s; animation-delay: 3.16478s; font-size: 15.7807px;">❄</div><div class="snowflake" style="left: 645.153px; animation-duration: 3.2838s; animation-delay: 4.50971s; font-size: 10.987px;">❄</div><div class="snowflake" style="left: 643.531px; animation-duration: 4.52361s; animation-delay: 2.68913s; font-size: 15.2356px;">❄</div><div class="snowflake" style="left: 1093.5px; animation-duration: 2.98605s; animation-delay: 3.23956s; font-size: 19.4293px;">❄</div><div class="snowflake" style="left: 1840.85px; animation-duration: 2.25807s; animation-delay: 0.337386s; font-size: 14.1723px;">❄</div><div class="snowflake" style="left: 1492.99px; animation-duration: 2.43035s; animation-delay: 4.98856s; font-size: 17.4472px;">❄</div><div class="snowflake" style="left: 1736.26px; animation-duration: 4.6729s; animation-delay: 3.51561s; font-size: 12.7765px;">❄</div><div class="snowflake" style="left: 1437.08px; animation-duration: 3.20178s; animation-delay: 3.8306s; font-size: 11.4051px;">❄</div><div class="snowflake" style="left: 1491.9px; animation-duration: 4.1321s; animation-delay: 2.74676s; font-size: 13.7946px;">❄</div><div class="snowflake" style="left: 474.364px; animation-duration: 4.65793s; animation-delay: 1.77475s; font-size: 19.7961px;">❄</div><div class="snowflake" style="left: 662.366px; animation-duration: 4.69268s; animation-delay: 3.3365s; font-size: 17.0465px;">❄</div><div class="snowflake" style="left: 1751.89px; animation-duration: 2.14611s; animation-delay: 1.51815s; font-size: 13.1467px;">❄</div><div class="snowflake" style="left: 329.422px; animation-duration: 4.1069s; animation-delay: 3.98981s; font-size: 10.4666px;">❄</div><div class="snowflake" style="left: 1117.05px; animation-duration: 2.12187s; animation-delay: 1.41613s; font-size: 17.0093px;">❄</div><div class="snowflake" style="left: 648.694px; animation-duration: 4.42259s; animation-delay: 0.0379882s; font-size: 10.0163px;">❄</div><div class="snowflake" style="left: 419.28px; animation-duration: 2.91489s; animation-delay: 3.01491s; font-size: 17.1157px;">❄</div><div class="snowflake" style="left: 1430.79px; animation-duration: 3.61486s; animation-delay: 0.844267s; font-size: 12.4864px;">❄</div><div class="snowflake" style="left: 119.678px; animation-duration: 3.03372s; animation-delay: 1.63466s; font-size: 12.4357px;">❄</div><div class="snowflake" style="left: 365.56px; animation-duration: 3.44187s; animation-delay: 3.86556s; font-size: 12.4912px;">❄</div><div class="snowflake" style="left: 1846.92px; animation-duration: 4.26115s; animation-delay: 2.99609s; font-size: 16.6352px;">❄</div><div class="snowflake" style="left: 199.739px; animation-duration: 2.91005s; animation-delay: 0.932003s; font-size: 17.8846px;">❄</div><div class="snowflake" style="left: 74.9195px; animation-duration: 3.25344s; animation-delay: 1.11599s; font-size: 17.137px;">❄</div><div class="snowflake" style="left: 1533.51px; animation-duration: 4.59362s; animation-delay: 1.3548s; font-size: 11.5413px;">❄</div><div class="snowflake" style="left: 1670.73px; animation-duration: 4.91201s; animation-delay: 4.66247s; font-size: 12.6249px;">❄</div><div class="snowflake" style="left: 1334.07px; animation-duration: 3.34227s; animation-delay: 3.23118s; font-size: 14.516px;">❄</div><div class="snowflake" style="left: 813.848px; animation-duration: 4.36477s; animation-delay: 1.8459s; font-size: 19.3641px;">❄</div><div class="snowflake" style="left: 33.8106px; animation-duration: 3.14091s; animation-delay: 4.87485s; font-size: 15.0527px;">❄</div><div class="snowflake" style="left: 388.051px; animation-duration: 4.55295s; animation-delay: 0.516412s; font-size: 15.3478px;">❄</div><div class="snowflake" style="left: 901.649px; animation-duration: 2.02031s; animation-delay: 2.87059s; font-size: 15.8957px;">❄</div><div class="snowflake" style="left: 1630.53px; animation-duration: 2.87752s; animation-delay: 2.36626s; font-size: 10.7971px;">❄</div><div class="snowflake" style="left: 781.221px; animation-duration: 2.22304s; animation-delay: 3.99191s; font-size: 14.8158px;">❄</div><div class="snowflake" style="left: 1894.65px; animation-duration: 4.42698s; animation-delay: 3.16518s; font-size: 14.6989px;">❄</div><div class="snowflake" style="left: 1183.09px; animation-duration: 4.86434s; animation-delay: 1.70967s; font-size: 14.2241px;">❄</div><div class="snowflake" style="left: 44.5857px; animation-duration: 4.32381s; animation-delay: 0.0618129s; font-size: 18.2229px;">❄</div><div class="snowflake" style="left: 768.305px; animation-duration: 4.29395s; animation-delay: 0.0976882s; font-size: 11.7952px;">❄</div><div class="snowflake" style="left: 1228.22px; animation-duration: 2.38555s; animation-delay: 2.70227s; font-size: 12.6092px;">❄</div><div class="snowflake" style="left: 175.478px; animation-duration: 4.17183s; animation-delay: 4.94877s; font-size: 16.5735px;">❄</div><div class="snowflake" style="left: 958.641px; animation-duration: 3.11321s; animation-delay: 2.78401s; font-size: 15.8935px;">❄</div><div class="snowflake" style="left: 228.048px; animation-duration: 4.74709s; animation-delay: 4.87175s; font-size: 19.8899px;">❄</div><div class="snowflake" style="left: 614.137px; animation-duration: 4.30789s; animation-delay: 2.92575s; font-size: 18.3778px;">❄</div><div class="snowflake" style="left: 1747.22px; animation-duration: 2.77855s; animation-delay: 2.10205s; font-size: 11.9451px;">❄</div><div class="snowflake" style="left: 1462.56px; animation-duration: 3.8491s; animation-delay: 0.356776s; font-size: 18.0541px;">❄</div><div class="snowflake" style="left: 78.2977px; animation-duration: 3.55303s; animation-delay: 4.36391s; font-size: 11.8573px;">❄</div><div class="snowflake" style="left: 1717.14px; animation-duration: 2.1072s; animation-delay: 3.55424s; font-size: 11.0154px;">❄</div><div class="snowflake" style="left: 540.025px; animation-duration: 3.12154s; animation-delay: 1.86933s; font-size: 16.7011px;">❄</div><div class="snowflake" style="left: 1650.39px; animation-duration: 2.44484s; animation-delay: 0.809259s; font-size: 18.3932px;">❄</div><div class="snowflake" style="left: 1637.34px; animation-duration: 3.1008s; animation-delay: 4.01791s; font-size: 12.1574px;">❄</div><div class="snowflake" style="left: 601.377px; animation-duration: 3.88914s; animation-delay: 4.52961s; font-size: 14.5119px;">❄</div><div class="snowflake" style="left: 518.143px; animation-duration: 3.41714s; animation-delay: 3.51165s; font-size: 19.0752px;">❄</div><div class="snowflake" style="left: 687.846px; animation-duration: 2.44267s; animation-delay: 1.91255s; font-size: 11.1132px;">❄</div>
+
+<!-- Batch filter & loader -->
+<script>
+function showLoader(event, url) {
+  event.preventDefault();
+  document.getElementById("loader").style.display = "flex";
+  setTimeout(function() {
+    window.location.href = url;
+  }, 3000);
+}
+
+function filterBatches(className) {
+  const batches = document.querySelectorAll('.batch-card');
+  batches.forEach(batch => {
+    if (className === 'all') {
+      batch.style.display = "block";
+    } else if (batch.getAttribute('data-class').includes(className)) {
+      batch.style.display = "block";
+    } else {
+      batch.style.display = "none";
+    }
+  });
+}
+
+function searchBatches() {
+  const input = document.getElementById('search-bar').value.toLowerCase();
+  const batches = document.querySelectorAll('.batch-card');
+  batches.forEach(batch => {
+    const title = batch.querySelector('.batch-title').textContent.toLowerCase();
+    if (title.includes(input)) {
+      batch.style.display = "block";
+    } else {
+      batch.style.display = "none";
+    }
+  });
+}
+</script>
+
+
+
+</body></html>

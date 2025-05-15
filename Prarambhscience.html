@@ -1,0 +1,764 @@
+<meta name='viewport' content='width=device-width, initial-scale=1'/><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GET APK'S - Learn</title>
+     
+
+
+
+  <style>
+    /* --- GLOBAL STYLES --- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to bottom right, #f8f0ff, #efe0ff);
+      color: #4b0082;
+      overflow-x: hidden;
+      min-height: 100vh;
+      position: relative;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('https://cdn.jsdelivr.net/gh/Julienh/ShinySnow/snow.png') repeat;
+      animation: snow 50s linear infinite;
+      opacity: 0.2;
+      z-index: -1;
+    }
+    @keyframes snow {
+      0% { background-position: 0 0; }
+      100% { background-position: 0 1000px; }
+    }
+    header {
+      text-align: center;
+      padding: 30px 10px 20px;
+      font-size: 36px;
+      font-weight: 900;
+      color: #6a0dad;
+      text-shadow: 0 0 12px #d8b4fe;
+      background: #f0e6ff;
+      border-bottom: 1px solid #d8b4fe;
+      box-shadow: 0 4px 8px #d8b4fe88;
+    }
+    .search-bar {
+      display: flex;
+      justify-content: center;
+      margin: 25px 0 10px;
+    }
+    .search-bar input {
+      padding: 12px 30px;
+      border-radius: 30px;
+      width: 320px;
+      border: 2px solid #c084fc;
+      background: #faf5ff;
+      color: #4b0082;
+      font-size: 16px;
+      outline: none;
+      box-shadow: 0 0 15px #e0cfff;
+      transition: 0.3s ease;
+    }
+    .search-bar input::placeholder {
+      color: #9c4dcc;
+    }
+    .search-bar input:focus {
+      background: #f0e0ff;
+      box-shadow: 0 0 25px #c084fc;
+      border-color: #a855f7;
+    }
+    .subject-tags {
+      text-align: center;
+      margin: 10px 0 20px;
+      overflow-x: auto;
+      white-space: nowrap;
+      padding: 0 10px;
+    }
+    .subject-tags button {
+      display: inline-block;
+      padding: 10px 20px;
+      margin: 5px;
+      border-radius: 20px;
+      border: 2px solid #c084fc;
+      background: #faf5ff;
+      color: #6a0dad;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+    .subject-tags button:hover,
+    .subject-tags button.active {
+      background: #c084fc;
+      color: #fff;
+    }
+    .toggle-buttons {
+      text-align: center;
+      margin: 15px 0;
+    }
+    .toggle-buttons button {
+      padding: 12px 30px;
+      margin: 0 10px;
+      border-radius: 30px;
+      border: 2px solid #c084fc;
+      background: transparent;
+      color: #6a0dad;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s ease;
+      box-shadow: 0 0 10px #e9d5ff;
+    }
+    .toggle-buttons button:hover,
+    .toggle-buttons button.active {
+      background: #c084fc;
+      color: #fff;
+      box-shadow: 0 0 20px #c084fc88;
+      transform: scale(1.05);
+    }
+    .card-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      padding: 10px 20px 50px;
+    }
+    .card {
+      background: #f9f3ff;
+      border: 1px solid #d8b4fe;
+      border-radius: 25px;
+      width: 320px;
+      overflow: hidden;
+      box-shadow: 0 0 20px #d8b4fe77;
+      transition: 0.4s ease;
+      position: relative;
+    }
+    .card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 0 30px #c084fcaa;
+    }
+    .card img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      border-bottom: 1px solid #d8b4fe;
+    }
+    .card h3 {
+      padding: 15px 10px 5px;
+      font-size: 18px;
+      color: #4b0082;
+      text-align: center;
+    }
+    .card .btn {
+      display: block;
+      margin: 15px auto 20px;
+      padding: 10px 20px;
+      background: #c084fc;
+      color: #fff;
+      border-radius: 25px;
+      font-weight: bold;
+      text-decoration: none;
+      width: fit-content;
+      transition: 0.3s ease;
+      box-shadow: 0 0 15px #e0cfff;
+    }
+    .card .btn:hover {
+      background: #a855f7;
+      box-shadow: 0 0 20px #c084fcaa;
+    }
+    .hidden {
+      display: none;
+    }
+    @media screen and (max-width: 768px) {
+      header {
+        font-size: 26px;
+      }
+      .toggle-buttons button {
+        margin: 10px 6px;
+        padding: 10px 20px;
+      }
+      .search-bar input {
+        width: 250px;
+      }
+    }
+        .pdf-icon {
+      font-size: 48px;
+      margin-top: 20px;
+      color: #a855f7;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>Prarambh - PCMB</header>
+
+<div class="search-bar">
+  <input type="text" id="searchInput" placeholder="Search Lectures or Notes...">
+</div>
+
+<div class="subject-tags" id="subjectTags">
+  <button data-subject="all" class="active">All</button>
+  <button data-subject="physics">Physics</button>
+  <button data-subject="maths">Maths</button>
+  <button data-subject="chemistry">Chemistry</button>
+  <button data-subject="biology">Biology</button>
+  <button data-subject="applied maths">Applied Maths</button>
+</div>
+
+<div class="toggle-buttons">
+  <button id="lecturesBtn" class="active">Lectures</button>
+  <button id="notesBtn">Notes</button>
+</div>
+
+<!-- LECTURES SECTION -->
+
+<!-- LECTURES SECTION -->
+<div id="lecturesSection" class="card-container">
+<div class="card" data-subject="Physics" data-title="Unit and Measurement Lecture 1">
+  <img src="https://i.ibb.co/k6mTy71V/x.jpg" alt="Physics">
+  <h3>Unit and Measurement Lecture 1</h3>
+  <a href="https://www.youtube.com/live/eYHkwzP0TkY?si=RhZqQ8d0HGvZHOrB" class="btn" target="_blank">Watch</a>
+</div>
+
+<div class="card" data-subject="Physics" data-title="Unit and Measurement Lecture 2">
+  <img src="https://i.ibb.co/k6mTy71V/x.jpg" alt="Physics">
+  <h3>Unit and Measurement Lecture 2</h3>
+  <a href="https://livetv-flax.vercel.app/Videoplayer.html?lessonurl=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4354032/174490568189301097666/index_3.m3u8" class="btn" target="_blank">Watch</a>
+</div>
+
+<div class="card" data-subject="Physics" data-title="Unit and Measurement Lecture 3">
+  <img src="https://i.ibb.co/k6mTy71V/x.jpg" alt="Physics">
+  <h3>Unit and Measurement Lecture 3</h3>
+  <a href="https://livetv-flax.vercel.app/Videoplayer.html?lessonurl=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4354885/174499396879388296383/index_3.m3u8" class="btn" target="_blank">Watch</a>
+</div>
+
+<div class="card" data-subject="Physics" data-title="Unit and Measurement Lecture 4">
+  <img src="https://i.ibb.co/k6mTy71V/x.jpg" alt="Physics">
+  <h3>Unit and Measurement Lecture 4</h3>
+  <a href="https://livetv-flax.vercel.app/Videoplayer.html?lessonurl=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4360178/174551194721888296383/index_3.m3u8" class="btn" target="_blank">Watch</a>
+</div>
+
+<div class="card" data-subject="Physics" data-title="Unit and Measurement Lecture 5">
+  <img src="https://i.ibb.co/k6mTy71V/x.jpg" alt="Physics">
+  <h3>Unit and Measurement Lecture 5</h3>
+  <a href="https://livetv-flax.vercel.app/Videoplayer.html?lessonurl=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4361337/174559902322678296383/index_1.m3u8" class="btn" target="_blank">Watch</a>
+</div>
+<div class="card" data-subject="Chemistry" data-title="Basic Concepts of Chemistry Lecture 1">
+  <img src="https://i.ibb.co/k6mTy71V/x.jpg" alt="Chemistry">
+  <h3>Basic Concepts of Chemistry Lecture 1</h3>
+  <a href="https://www.youtube.com/live/EVU_Bvc3HpE?si=nPI1rPll0QTRo_BX" class="btn" target="_blank">Watch</a>
+</div>
+
+<div class="card" data-subject="Chemistry" data-title="Basic Concepts of Chemistry Lecture 2">
+  <img src="https://i.ibb.co/k6mTy71V/x.jpg" alt="Chemistry">
+  <h3>Basic Concepts of Chemistry Lecture 2</h3>
+  <a href="https://livetv-flax.vercel.app/Videoplayer.html?lessonurl=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4353000/174481993295887555169/index_3.m3u8" class="btn" target="_blank">Watch</a>
+</div>
+
+<div class="card" data-subject="Chemistry" data-title="Basic Concepts of Chemistry Lecture 3">
+  <img src="https://i.ibb.co/k6mTy71V/x.jpg" alt="Chemistry">
+  <h3>Basic Concepts of Chemistry Lecture 3</h3>
+  <a href="https://livetv-flax.vercel.app/Videoplayer.html?lessonurl=http://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4357309/174530949861477555169/index_3.m3u8" class="btn" target="_blank">Watch</a>
+</div>
+
+<div class="card" data-subject="Chemistry" data-title="Basic Concepts of Chemistry Lecture 4">
+  <img src="https://i.ibb.co/k6mTy71V/x.jpg" alt="Chemistry">
+  <h3>Basic Concepts of Chemistry Lecture 4</h3>
+  <a href="https://livetv-flax.vercel.app/Videoplayer.html?lessonurl=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4357309/174530949861477555169/index_3.m3u8" class="btn" target="_blank">Watch</a>
+</div>
+
+<div class="card" data-subject="Chemistry" data-title="Basic Concepts of Chemistry Lecture 5">
+  <img src="https://i.ibb.co/k6mTy71V/x.jpg" alt="Chemistry">
+  <h3>Basic Concepts of Chemistry Lecture 5</h3>
+  <a href="https://livetv-flax.vercel.app/Videoplayer.html?lessonurl=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4357831/174533736975997555169/index_3.m3u8" class="btn" target="_blank">Watch</a>
+</div>
+
+<div class="card" data-subject="Chemistry" data-title="Basic Concepts of Chemistry Lecture 6">
+  <img src="https://i.ibb.co/k6mTy71V/x.jpg" alt="Chemistry">
+  <h3>Basic Concepts of Chemistry Lecture 6</h3>
+  <a href="https://livetv-flax.vercel.app/Videoplayer.html?lessonurl=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4358829/174541226159937555169/index_3.m3u8" class="btn" target="_blank">Watch</a>
+</div>
+<div class="card" data-subject="biology" data-title="Living World Lecture 1">
+  <img src="https://i.ibb.co/k6mTy71V/x.jpg" alt="Biology">
+  <h3>Living World Lecture 1</h3>
+  <a href="https://www.youtube.com/live/RF6xfHVo9xc?si=Bci9eUf9ZLq1zCTt" class="btn" target="_blank">Watch</a>
+</div>
+
+<div class="card" data-subject="biology" data-title="Living World Lecture 2">
+  <img src="https://i.ibb.co/k6mTy71V/x.jpg" alt="Biology">
+  <h3>Living World Lecture 2</h3>
+  <a href="https://livetv-flax.vercel.app/Videoplayer.html?lessonurl=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4353875/174489575453452621696/index_3.m3u8" class="btn" target="_blank">Watch</a>
+</div>
+
+<div class="card" data-subject="biology" data-title="Living World Lecture 3">
+  <img src="https://i.ibb.co/k6mTy71V/x.jpg" alt="Biology">
+  <h3>Living World Lecture 3</h3>
+  <a href="https://livetv-flax.vercel.app/Videoplayer.html?lessonurl=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4354742/174498168131232621696/index_3.m3u8" class="btn" target="_blank">Watch</a>
+</div>
+
+<div class="card" data-subject="biology" data-title="Biological Classification Lecture 1">
+  <img src="https://i.ibb.co/k6mTy71V/x.jpg" alt="Biology">
+  <h3>Biological Classification Lecture 1</h3>
+  <a href="https://livetv-flax.vercel.app/Videoplayer.html?lessonurl=http://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4356754/174524546772032621696/index_3.m3u8" class="btn" target="_blank">Watch</a>
+</div>
+
+<div class="card" data-subject="biology" data-title="Biological Classification Lecture 2">
+  <img src="https://i.ibb.co/k6mTy71V/x.jpg" alt="Biology">
+  <h3>Biological Classification Lecture 2</h3>
+  <a href="https://livetv-flax.vercel.app/Videoplayer.html?lessonurl=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4357796/174533217995822621696/index_3.m3u8" class="btn" target="_blank">Watch</a>
+</div>
+
+<div class="card" data-subject="biology" data-title="Biological Classification Lecture 3">
+  <img src="https://i.ibb.co/k6mTy71V/x.jpg" alt="Biology">
+  <h3>Biological Classification Lecture 3</h3>
+  <a href="https://livetv-flax.vercel.app/Videoplayer.html?lessonurl=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4359956/174549899862182621696/index_3.m3u8" class="btn" target="_blank">Watch</a>
+</div>
+<div class="card" data-subject="maths" data-title="Sets Lecture 1">
+  <img src="https://i.ibb.co/k6mTy71V/x.jpg" alt="Maths">
+  <h3>Sets Lecture 1</h3>
+  <a href="https://www.youtube.com/live/vcqyIgZfCog?si=eIa2REX2GlPQDiYQ" class="btn" target="_blank">Watch</a>
+</div>
+
+<div class="card" data-subject="maths" data-title="Sets Lecture 2">
+  <img src="https://i.ibb.co/k6mTy71V/x.jpg" alt="Maths">
+  <h3>Sets Lecture 2</h3>
+  <a href="https://livetv-flax.vercel.app/Videoplayer.html?lessonurl=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4353889/174489667533668296383/index_3.m3u8" class="btn" target="_blank">Watch</a>
+</div>
+
+<div class="card" data-subject="maths" data-title="Sets Lecture 3">
+  <img src="https://i.ibb.co/k6mTy71V/x.jpg" alt="Maths">
+  <h3>Sets Lecture 3</h3>
+  <a href="https://livetv-flax.vercel.app/Videoplayer.html?lessonurl=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4356690/174524049345081097666/index_3.m3u8" class="btn" target="_blank">Watch</a>
+</div>
+
+<div class="card" data-subject="maths" data-title="Sets Lecture 4">
+  <img src="https://i.ibb.co/k6mTy71V/x.jpg" alt="Maths">
+  <h3>Sets Lecture 4</h3>
+  <a href="https://livetv-flax.vercel.app/Videoplayer.html?lessonurl=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4357736/174532685248651097666/index_3.m3u8" class="btn" target="_blank">Watch</a>
+</div>
+
+<div class="card" data-subject="maths" data-title="Sets Lecture 5">
+  <img src="https://i.ibb.co/k6mTy71V/x.jpg" alt="Maths">
+  <h3>Sets Lecture 5</h3>
+  <a href="https://livetv-flax.vercel.app/Videoplayer.html?lessonurl=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4359038/174542426999201097666/index_3.m3u8" class="btn" target="_blank">Watch</a>
+</div>
+<div class="card" data-subject="applied maths" data-title="Binary Numbers Lecture 1">
+  <img src="https://i.ibb.co/k6mTy71V/x.jpg" alt="Applied Maths">
+  <h3>Binary Numbers Lecture 1</h3>
+  <a href="https://livetv-flax.vercel.app/Videoplayer.html?lessonurl=https://d3cx6qbbd4cbso.cloudfront.net/file_library/videos/vod_non_drm_ios/4357626/1745323611_8843412748102647/sunny/1745323382934_558618253735601500_video_VOD.m3u8" class="btn" target="_blank">Watch</a>
+</div>
+<div class="card" data-subject="Physics" data-title="Unit and Measurement Lecture 5">
+  <img src="https://i.ibb.co/k6mTy71V/x.jpg" alt="Physics">
+  <h3>Unit and Measurement Lecture 6</h3>
+  <a href="https://livetv-flax.vercel.app/Videoplayer.html?lessonurl=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4362139/174568479092198296383/index_3.m3u8" class="btn" target="_blank">Watch</a>
+</div>
+<!-- Physics - Motion in a Straight Line -->
+<div class="card" data-subject="physics" data-title="Motion in a straight line">
+  <img src="https://i.ibb.co/k6mTy71V/x.jpg" alt="Motion in a straight line">
+  <h3>Physics - Motion in a straight line</h3>
+  <a href="https://livetv-flax.vercel.app/Videoplayer.html?lessonurl=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4367211/174611702457038296383/index_3.m3u8" class="btn">Watch</a>
+</div>
+
+<!-- Physics - Basic Maths Lecture 1 -->
+<div class="card" data-subject="physics" data-title="Basic Maths Lecture 1">
+  <img src="https://i.ibb.co/k6mTy71V/x.jpg" alt="Basic Maths Lecture 1">
+  <h3>Physics - Basic Maths Lecture 1</h3>
+  <a href="https://livetv-flax.vercel.app/Videoplayer.html?lessonurl=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4368402/174620181785161071993/index_3.m3u8" class="btn">Watch</a>
+</div>
+
+<!-- Chemistry - Structure of Atom Lecture 1 -->
+<div class="card" data-subject="chemistry" data-title="Structure of atom Lecture 1">
+  <img src="https://i.ibb.co/k6mTy71V/x.jpg" alt="Structure of atom Lecture 1">
+  <h3>Chemistry - Structure of atom Lecture 1</h3>
+  <a href="https://livetv-flax.vercel.app/Videoplayer.html?lessonurl=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4363320/174584946237347555169/index_3.m3u8" class="btn">Watch</a>
+</div>
+
+<!-- Chemistry - Structure of Atom Lecture 2 -->
+<div class="card" data-subject="chemistry" data-title="Structure of atom Lecture 2">
+  <img src="https://i.ibb.co/k6mTy71V/x.jpg" alt="Structure of atom Lecture 2">
+  <h3>Chemistry - Structure of atom Lecture 2</h3>
+  <a href="https://livetv-flax.vercel.app/Videoplayer.html?lessonurl=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4364789/174594373555637555169/index_3.m3u8" class="btn">Watch</a>
+</div>
+
+<!-- Chemistry - Structure of Atom Lecture 3 -->
+<div class="card" data-subject="chemistry" data-title="Structure of atom Lecture 3">
+  <img src="https://i.ibb.co/k6mTy71V/x.jpg" alt="Structure of atom Lecture 3">
+  <h3>Chemistry - Structure of atom Lecture 3</h3>
+  <a href="https://livetv-flax.vercel.app/Videoplayer.html?lessonurl=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4365831/174601791723957555169/index_3.m3u8" class="btn">Watch</a>
+</div>
+
+<!-- Biology - Biological Classification Lecture 4 -->
+<div class="card" data-subject="biology" data-title="Biological classification Lecture 4">
+  <img src="https://i.ibb.co/k6mTy71V/x.jpg" alt="Biological classification Lecture 4">
+  <h3>Biology - Biological classification Lecture 4</h3>
+  <a href="https://livetv-flax.vercel.app/Videoplayer.html?lessonurl=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4363375/174585552159492621696/index_3.m3u8" class="btn">Watch</a>
+</div>
+
+<!-- Biology - Biological Classification Lecture 5 -->
+<div class="card" data-subject="biology" data-title="Biological classification Lecture 5">
+  <img src="https://i.ibb.co/k6mTy71V/x.jpg" alt="Biological classification Lecture 5">
+  <h3>Biology - Biological classification Lecture 5</h3>
+  <a href="https://livetv-flax.vercel.app/Videoplayer.html?lessonurl=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4364707/174593615136972621696/index_3.m3u8" class="btn">Watch</a>
+</div>
+
+<!-- Biology - Biological Classification Lecture 6 -->
+<div class="card" data-subject="biology" data-title="Biological classification Lecture 6">
+  <img src="https://i.ibb.co/k6mTy71V/x.jpg" alt="Biological classification Lecture 6">
+  <h3>Biology - Biological classification Lecture 6</h3>
+  <a href="https://livetv-flax.vercel.app/Videoplayer.html?lessonurl=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4366969/174610253788082621696/index_3.m3u8" class="btn">Watch</a>
+</div>
+<!-- Maths - Complex Numbers Lectures 1-4 -->
+<div class="card" data-subject="maths" data-title="Complex Numbers Lecture 1">
+  <img src="https://i.ibb.co/k6mTy71V/x.jpg" alt="Complex Numbers">
+  <h3>Maths - Complex Numbers Lecture 1</h3>
+  <a href="https://livetv-flax.vercel.app/Videoplayer.html?lessonurl=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4363249/174584513794761261798/index_3.m3u8" class="btn">Watch</a>
+</div>
+
+<div class="card" data-subject="maths" data-title="Complex Numbers Lecture 2">
+  <img src="https://i.ibb.co/k6mTy71V/x.jpg" alt="Complex Numbers">
+  <h3>Maths - Complex Numbers Lecture 2</h3>
+  <a href="https://livetv-flax.vercel.app/Videoplayer.html?lessonurl=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4364488/174592875146111261798/index_3.m3u8" class="btn">Watch</a>
+</div>
+
+<div class="card" data-subject="maths" data-title="Complex Numbers Lecture 3">
+  <img src="https://i.ibb.co/k6mTy71V/x.jpg" alt="Complex Numbers">
+  <h3>Maths - Complex Numbers Lecture 3</h3>
+  <a href="https://livetv-flax.vercel.app/Videoplayer.html?lessonurl=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4366039/174602857795961261798/index_3.m3u8" class="btn">Watch</a>
+</div>
+
+<div class="card" data-subject="maths" data-title="Complex Numbers Lecture 4">
+  <img src="https://i.ibb.co/k6mTy71V/x.jpg" alt="Complex Numbers">
+  <h3>Maths - Complex Numbers Lecture 4</h3>
+  <a href="https://livetv-flax.vercel.app/Videoplayer.html?lessonurl=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4367111/174610963914991261798/index_3.m3u8" class="btn">Watch</a>
+</div>
+<div class="card" data-subject="physics" data-title="Basic Maths Lecture 1">
+  <img src="https://i.ibb.co/k6mTy71V/x.jpg" alt="Basic Maths Lecture 1">
+  <h3>Physics - Basic Maths Lecture 2</h3>
+  <a href="https://livetv-flax.vercel.app/Videoplayer.html?lessonurl=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4370179/174628987185681071993/index_3.m3u8" class="btn">Watch</a>
+</div>
+<div class="card" data-subject="chemistry" data-title="Structure of atom Lecture 3">
+  <img src="https://i.ibb.co/k6mTy71V/x.jpg" alt="Structure of atom Lecture 3">
+  <h3>Chemistry - Structure of atom Lecture 4</h3>
+  <a href="https://livetv-flax.vercel.app/Videoplayer.html?lessonurl=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4372294/174646064983197555169/index_3.m3u8" class="btn">Watch</a>
+</div>
+<div class="card" data-subject="chemistry" data-title="Structure of atom Lecture 3">
+  <img src="https://i.ibb.co/k6mTy71V/x.jpg" alt="Structure of atom Lecture 3">
+  <h3>Chemistry - Structure of atom Lecture 5</h3>
+  <a href="https://livetv-flax.vercel.app/Videoplayer.html?lessonurl=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4373927/174654700417617555169/index_3.m3u8" class="btn">Watch</a>
+</div>
+<div class="card" data-subject="biology" data-title="Biological classification Lecture 6">
+  <img src="https://i.ibb.co/k6mTy71V/x.jpg" alt="Biological classification Lecture 6">
+  <h3>Biology - Biological classification Lecture 7</h3>
+  <a href="https://livetv-flax.vercel.app/Videoplayer.html?lessonurl=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4372260/174645518133352621696/index_3.m3u8" class="btn">Watch</a>
+</div>
+<div class="card" data-subject="biology" data-title="Biological classification Lecture 6">
+  <img src="https://i.ibb.co/k6mTy71V/x.jpg" alt="Biological classification Lecture 6">
+  <h3>Biology - Biological classification Lecture 8</h3>
+  <a href="https://livetv-flax.vercel.app/Videoplayer.html?lessonurl=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4373877/174654161051022621696/index_3.m3u8" class="btn">Watch</a>
+</div>
+<div class="card" data-subject="maths" data-title="Complex Numbers Lecture 2">
+  <img src="https://i.ibb.co/k6mTy71V/x.jpg" alt="Complex Numbers">
+  <h3>Maths - Complex Numbers Lecture 5</h3>
+  <a href="https://livetv-flax.vercel.app/Videoplayer.html?lessonurl=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4373799/174653642467251261798/index_3.m3u8" class="btn">Watch</a>
+</div>
+</div>
+<!-- NOTES SECTION -->
+<div id="notesSection" class="card-container hidden">
+<div class="card" data-subject="Physics">
+  <div class="pdf-icon">📜</div>
+  <h3>Physics - Unit and Measurement Notes 1</h3>
+  <a href="https://dxixtlyravvxx.cloudfront.net/540admin_v1/file_manager/pdf/350215509469119700.pdf" class="btn" target="_blank">View PDF</a>
+</div>
+
+<div class="card" data-subject="Physics">
+  <div class="pdf-icon">📜</div>
+  <h3>Physics - Unit and Measurement Notes 2</h3>
+  <a href="https://dxixtlyravvxx.cloudfront.net/540admin_v1/file_manager/pdf/320554157609896960.pdf" class="btn" target="_blank">View PDF</a>
+</div>
+
+<div class="card" data-subject="Physics">
+  <div class="pdf-icon">📜</div>
+  <h3>Physics - Unit and Measurement Notes 3</h3>
+  <a href="https://dxixtlyravvxx.cloudfront.net/540admin_v1/file_manager/pdf/282566967198221150.pdf" class="btn" target="_blank">View PDF</a>
+</div>
+
+<div class="card" data-subject="Physics">
+  <div class="pdf-icon">📜</div>
+  <h3>Physics - Unit and Measurement PCP</h3>
+  <a href="https://dxixtlyravvxx.cloudfront.net/540admin_v1/file_manager/pdf/798807099203843300.pdf" class="btn" target="_blank">View PDF</a>
+</div>
+
+<div class="card" data-subject="Chemistry">
+  <div class="pdf-icon">📜</div>
+  <h3>Chemistry - Some Basic Concepts Notes 1</h3>
+  <a href="https://drive.google.com/file/d/1q48bP2D6mJ4yDd0EXKhyuifEDgfBVbuk/view?usp=drive_link" class="btn" target="_blank">View PDF</a>
+</div>
+
+<div class="card" data-subject="Chemistry">
+  <div class="pdf-icon">📜</div>
+  <h3>Chemistry - Some Basic Concepts Notes 2</h3>
+  <a href="https://dxixtlyravvxx.cloudfront.net/540admin_v1/file_manager/pdf/60665227316336800.pdf" class="btn" target="_blank">View PDF</a>
+</div>
+
+<div class="card" data-subject="Chemistry">
+  <div class="pdf-icon">📜</div>
+  <h3>Chemistry - Some Basic Concepts Notes 3</h3>
+  <a href="https://dxixtlyravvxx.cloudfront.net/540admin_v1/file_manager/pdf/563943491510636200.pdf" class="btn" target="_blank">View PDF</a>
+</div>
+
+<div class="card" data-subject="Chemistry">
+  <div class="pdf-icon">📜</div>
+  <h3>Chemistry - Some Basic Concepts Notes 4</h3>
+  <a href="https://dxixtlyravvxx.cloudfront.net/540admin_v1/file_manager/pdf/646257785235418800.pdf" class="btn" target="_blank">View PDF</a>
+</div>
+
+<div class="card" data-subject="Chemistry">
+  <div class="pdf-icon">📜</div>
+  <h3>Chemistry - Some Basic Concepts Notes 5</h3>
+  <a href="https://dxixtlyravvxx.cloudfront.net/540admin_v1/file_manager/pdf/492924385069963100.pdf" class="btn" target="_blank">View PDF</a>
+</div>
+
+<div class="card" data-subject="Biology">
+  <div class="pdf-icon">📜</div>
+  <h3>Biology - Living World Notes 1</h3>
+  <a href="https://drive.google.com/file/d/1pwuQqik49QOyY2MD4eWUwdPpKX6TpXlX/view?usp=drive_link" class="btn" target="_blank">View PDF</a>
+</div>
+
+<div class="card" data-subject="Biology">
+  <div class="pdf-icon">📜</div>
+  <h3>Biology - Living World Notes 2</h3>
+  <a href="https://dxixtlyravvxx.cloudfront.net/540admin_v1/file_manager/pdf/840347643747496200.pdf" class="btn" target="_blank">View PDF</a>
+</div>
+
+<div class="card" data-subject="Biology">
+  <div class="pdf-icon">📜</div>
+  <h3>Biology - Living World Notes 3</h3>
+  <a href="https://dxixtlyravvxx.cloudfront.net/540admin_v1/file_manager/pdf/568137344888524700.pdf" class="btn" target="_blank">View PDF</a>
+</div>
+
+<div class="card" data-subject="Biology">
+  <div class="pdf-icon">📜</div>
+  <h3>Biology - Biological Classification Notes 1</h3>
+  <a href="https://dxixtlyravvxx.cloudfront.net/540admin_v1/file_manager/pdf/835803105287866900.pdf" class="btn" target="_blank">View PDF</a>
+</div>
+
+<div class="card" data-subject="Biology">
+  <div class="pdf-icon">📜</div>
+  <h3>Biology - Biological Classification Notes 2</h3>
+  <a href="https://dxixtlyravvxx.cloudfront.net/540admin_v1/file_manager/pdf/379080259263586700.pdf" class="btn" target="_blank">View PDF</a>
+</div>
+
+<div class="card" data-subject="Biology">
+  <div class="pdf-icon">📜</div>
+  <h3>Biology - Biological Classification Notes 3</h3>
+  <a href="https://dxixtlyravvxx.cloudfront.net/540admin_v1/file_manager/pdf/24216229661638776.pdf" class="btn" target="_blank">View PDF</a>
+</div>
+
+<div class="card" data-subject="Maths">
+  <div class="pdf-icon">📜</div>
+  <h3>Maths - Sets Notes 1</h3>
+  <a href="https://dxixtlyravvxx.cloudfront.net/540admin_v1/file_manager/pdf/792174537923493500.pdf" class="btn" target="_blank">View PDF</a>
+</div>
+
+<div class="card" data-subject="Maths">
+  <div class="pdf-icon">📜</div>
+  <h3>Maths - Sets Notes 2</h3>
+  <a href="https://dxixtlyravvxx.cloudfront.net/540/admin_v1/file_manager/pdf/5110820Sets%20L2.pdf_Sets%20L2.pdf" class="btn" target="_blank">View PDF</a>
+</div>
+
+<div class="card" data-subject="Maths">
+  <div class="pdf-icon">📜</div>
+  <h3>Maths - Sets Notes 3</h3>
+  <a href="https://dxixtlyravvxx.cloudfront.net/540admin_v1/file_manager/pdf/798181586567513700.pdf" class="btn" target="_blank">View PDF</a>
+</div>
+
+<div class="card" data-subject="Maths">
+  <div class="pdf-icon">📜</div>
+  <h3>Maths - Sets Notes 4</h3>
+  <a href="https://dxixtlyravvxx.cloudfront.net/540admin_v1/file_manager/pdf/452267096067597250.pdf" class="btn" target="_blank">View PDF</a>
+</div>
+
+<div class="card" data-subject="Maths">
+  <div class="pdf-icon">📜</div>
+  <h3>Maths - Sets DPP</h3>
+  <a href="https://dxixtlyravvxx.cloudfront.net/540admin_v1/file_manager/pdf/759054519832697600.pdf" class="btn" target="_blank">View PDF</a>
+</div>
+
+<div class="card" data-subject="Physics">
+  <div class="pdf-icon">📜</div>
+  <h3>Physics - Unit and Measurement Notes 4</h3>
+  <a href="https://dxixtlyravvxx.cloudfront.net/540admin_v1/file_manager/pdf/141795108468127550.pdf" class="btn" target="_blank">View PDF</a>
+</div>
+
+<div class="card" data-subject="Physics">
+  <div class="pdf-icon">📜</div>
+  <h3>Physics - Unit and Measurement Notes 5</h3>
+  <a href="https://dxixtlyravvxx.cloudfront.net/540admin_v1/file_manager/pdf/4024933903930072.pdf" class="btn" target="_blank">View PDF</a>
+</div>
+
+<div class="card" data-subject="Physics">
+  <div class="pdf-icon">📜</div>
+  <h3>Physics - Unit and Measurement Notes 6</h3>
+  <a href="https://dxixtlyravvxx.cloudfront.net/540admin_v1/file_manager/pdf/42711989017558184.pdf" class="btn" target="_blank">View PDF</a>
+</div>
+
+<div class="card" data-subject="Chemistry">
+  <div class="pdf-icon">📜</div>
+  <h3>Chemistry - Structure of Atom Notes 1</h3>
+  <a href="https://dxixtlyravvxx.cloudfront.net/540admin_v1/file_manager/pdf/648524728566613900.pdf" class="btn" target="_blank">View PDF</a>
+</div>
+
+<div class="card" data-subject="Chemistry">
+  <div class="pdf-icon">📜</div>
+  <h3>Chemistry - Structure of Atom Notes 2</h3>
+  <a href="https://dxixtlyravvxx.cloudfront.net/540admin_v1/file_manager/pdf/882253112379514100.pdf" class="btn" target="_blank">View PDF</a>
+</div>
+
+<div class="card" data-subject="Chemistry">
+  <div class="pdf-icon">📜</div>
+  <h3>Chemistry - Structure of Atom Notes 3</h3>
+  <a href="https://dxixtlyravvxx.cloudfront.net/540admin_v1/file_manager/pdf/725318515177342300.pdf" class="btn" target="_blank">View PDF</a>
+</div>
+<div class="card" data-subject="Physics">
+  <div class="pdf-icon">📜</div>
+  <h3>Physics Basic Maths Notes 1</h3>
+  <a href="https://dxixtlyravvxx.cloudfront.net/540admin_v1/file_manager/pdf/63080286597865820.pdf" class="btn" target="_blank">View PDF</a>
+</div>
+<div class="card" data-subject="Physics">
+  <div class="pdf-icon">📜</div>
+  <h3>Physics Basic Maths Notes 2</h3>
+  <a href="https://dxixtlyravvxx.cloudfront.net/540admin_v1/file_manager/pdf/781289778058012200.pdf" class="btn" target="_blank">View PDF</a>
+</div>
+<div class="card" data-subject="Chemistry">
+  <div class="pdf-icon">📜</div>
+  <h3>Chemistry - Structure of Atom Notes 4</h3>
+  <a href="https://dxixtlyravvxx.cloudfront.net/540admin_v1/file_manager/pdf/129927195937409060.pdf" class="btn" target="_blank">View PDF</a>
+</div>
+<div class="card" data-subject="Chemistry">
+  <div class="pdf-icon">📜</div>
+  <h3>Chemistry - Structure of Atom Notes 5</h3>
+  <a href="https://dxixtlyravvxx.cloudfront.net/540admin_v1/file_manager/pdf/64128366459183150.pdf" class="btn" target="_blank">View PDF</a>
+</div>
+<div class="card" data-subject="Biology">
+  <div class="pdf-icon">📜</div>
+  <h3>Biology - Biological Classification Notes 4</h3>
+  <a href="https://dxixtlyravvxx.cloudfront.net/540admin_v1/file_manager/pdf/559946917947088400.pdf" class="btn" target="_blank">View PDF</a>
+</div>
+<div class="card" data-subject="Biology">
+  <div class="pdf-icon">📜</div>
+  <h3>Biology - Biological Classification Notes 5</h3>
+  <a href="https://dxixtlyravvxx.cloudfront.net/540admin_v1/file_manager/pdf/634399216622604700.pdf" class="btn" target="_blank">View PDF</a>
+</div>
+<div class="card" data-subject="Biology">
+  <div class="pdf-icon">📜</div>
+  <h3>Biology - Biological Classification Notes 6</h3>
+  <a href="https://dxixtlyravvxx.cloudfront.net/540admin_v1/file_manager/pdf/470449113809566500.pdf" class="btn" target="_blank">View PDF</a>
+</div>
+<div class="card" data-subject="Biology">
+  <div class="pdf-icon">📜</div>
+  <h3>Biology - Biological Classification Notes 7</h3>
+  <a href="https://dxixtlyravvxx.cloudfront.net/540admin_v1/file_manager/pdf/688116353569951400.pdf" class="btn" target="_blank">View PDF</a>
+</div>
+<div class="card" data-subject="Biology">
+  <div class="pdf-icon">📜</div>
+  <h3>Biology - Biological Classification Notes 8</h3>
+  <a href="https://dxixtlyravvxx.cloudfront.net/540admin_v1/file_manager/pdf/76093981534603400.pdf" class="btn" target="_blank">View PDF</a>
+</div>
+<div class="card" data-subject="Maths">
+  <div class="pdf-icon">📜</div>
+  <h3>Maths - Complex Numbers L1 Notes</h3>
+  <a href="https://dxixtlyravvxx.cloudfront.net/540admin_v1/file_manager/pdf/750226558976804600.pdf" class="btn" target="_blank">View PDF</a>
+</div>
+
+<div class="card" data-subject="Maths">
+  <div class="pdf-icon">📜</div>
+  <h3>Maths - Complex Numbers L2 Notes</h3>
+  <a href="https://dxixtlyravvxx.cloudfront.net/540admin_v1/file_manager/pdf/399242982850266700.pdf" class="btn" target="_blank">View PDF</a>
+</div>
+
+<div class="card" data-subject="Maths">
+  <div class="pdf-icon">📜</div>
+  <h3>Maths - Complex Numbers L3 Notes</h3>
+  <a href="https://dxixtlyravvxx.cloudfront.net/540admin_v1/file_manager/pdf/485152155798966900.pdf" class="btn" target="_blank">View PDF</a>
+</div>
+
+<div class="card" data-subject="Maths">
+  <div class="pdf-icon">📜</div>
+  <h3>Maths - Complex Numbers L4&5 Notes</h3>
+  <a href="https://dxixtlyravvxx.cloudfront.net/540admin_v1/file_manager/pdf/348718648836124700.pdf" class="btn" target="_blank">View PDF</a>
+</div>
+
+<div class="card" data-subject="Maths">
+  <div class="pdf-icon">📜</div>
+  <h3>Maths - Complex Numbers DPP 1</h3>
+  <a href="https://dxixtlyravvxx.cloudfront.net/540admin_v1/file_manager/pdf/331934519130572160.pdf" class="btn" target="_blank">View PDF</a>
+</div>
+
+<div class="card" data-subject="Maths">
+  <div class="pdf-icon">📜</div>
+  <h3>Maths - Complex Numbers DPP 2</h3>
+  <a href="https://dxixtlyravvxx.cloudfront.net/540admin_v1/file_manager/pdf/831229669238566000.pdf" class="btn" target="_blank">View PDF</a>
+</div>
+<script>
+  const lecturesBtn = document.getElementById('lecturesBtn');
+  const notesBtn = document.getElementById('notesBtn');
+  const lecturesSection = document.getElementById('lecturesSection');
+  const notesSection = document.getElementById('notesSection');
+  const searchInput = document.getElementById('searchInput');
+  const subjectTags = document.getElementById('subjectTags');
+  let selectedSubject = "all";
+
+  lecturesBtn.onclick = () => {
+    lecturesBtn.classList.add('active');
+    notesBtn.classList.remove('active');
+    lecturesSection.classList.remove('hidden');
+    notesSection.classList.add('hidden');
+    searchInput.value = "";
+    filterCards();
+  };
+
+  notesBtn.onclick = () => {
+    notesBtn.classList.add('active');
+    lecturesBtn.classList.remove('active');
+    notesSection.classList.remove('hidden');
+    lecturesSection.classList.add('hidden');
+    searchInput.value = "";
+    filterCards();
+  };
+
+  subjectTags.addEventListener('click', (e) => {
+    if (e.target.tagName === "BUTTON") {
+      document.querySelectorAll('.subject-tags button').forEach(btn => btn.classList.remove('active'));
+      e.target.classList.add('active');
+      selectedSubject = e.target.dataset.subject;
+      filterCards();
+    }
+  });
+
+  searchInput.addEventListener('keyup', filterCards);
+
+  function filterCards() {
+    const searchText = searchInput.value.toLowerCase();
+    const activeSection = !lecturesSection.classList.contains('hidden') ? lecturesSection : notesSection;
+    const cards = activeSection.querySelectorAll('.card');
+
+    cards.forEach(card => {
+      const subject = card.dataset.subject.toLowerCase();
+      const title = card.dataset.title.toLowerCase();
+      const matchSubject = selectedSubject === 'all' || subject === selectedSubject;
+      const matchText = title.includes(searchText);
+      card.style.display = (matchSubject && matchText) ? 'block' : 'none';
+    });
+  }
+</script>
+
+</body>
+</html>

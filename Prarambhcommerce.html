@@ -1,0 +1,599 @@
+<meta name='viewport' content='width=device-width, initial-scale=1'/><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GET APK'S - Learn</title>
+
+  <style>
+    /* [Your same CSS as before -- no changes needed] */
+    /* GLOBAL STYLES */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to bottom right, #f8f0ff, #efe0ff);
+      color: #4b0082;
+      overflow-x: hidden;
+      min-height: 100vh;
+      position: relative;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('https://cdn.jsdelivr.net/gh/Julienh/ShinySnow/snow.png') repeat;
+      animation: snow 50s linear infinite;
+      opacity: 0.2;
+      z-index: -1;
+    }
+    @keyframes snow {
+      0% { background-position: 0 0; }
+      100% { background-position: 0 1000px; }
+    }
+    header {
+      text-align: center;
+      padding: 30px 10px 20px;
+      font-size: 36px;
+      font-weight: 900;
+      color: #6a0dad;
+      text-shadow: 0 0 12px #d8b4fe;
+      background: #f0e6ff;
+      border-bottom: 1px solid #d8b4fe;
+      box-shadow: 0 4px 8px #d8b4fe88;
+    }
+    .search-bar {
+      display: flex;
+      justify-content: center;
+      margin: 25px 0 10px;
+    }
+    .search-bar input {
+      padding: 12px 30px;
+      border-radius: 30px;
+      width: 320px;
+      border: 2px solid #c084fc;
+      background: #faf5ff;
+      color: #4b0082;
+      font-size: 16px;
+      outline: none;
+      box-shadow: 0 0 15px #e0cfff;
+      transition: 0.3s ease;
+    }
+    .search-bar input::placeholder {
+      color: #9c4dcc;
+    }
+    .search-bar input:focus {
+      background: #f0e0ff;
+      box-shadow: 0 0 25px #c084fc;
+      border-color: #a855f7;
+    }
+    .subject-tags {
+      text-align: center;
+      margin: 10px 0 20px;
+      overflow-x: auto;
+      white-space: nowrap;
+      padding: 0 10px;
+    }
+    .subject-tags button {
+      display: inline-block;
+      padding: 10px 20px;
+      margin: 5px;
+      border-radius: 20px;
+      border: 2px solid #c084fc;
+      background: #faf5ff;
+      color: #6a0dad;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+    .subject-tags button:hover,
+    .subject-tags button.active {
+      background: #c084fc;
+      color: #fff;
+    }
+    .toggle-buttons {
+      text-align: center;
+      margin: 15px 0;
+    }
+    .toggle-buttons button {
+      padding: 12px 30px;
+      margin: 0 10px;
+      border-radius: 30px;
+      border: 2px solid #c084fc;
+      background: transparent;
+      color: #6a0dad;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s ease;
+      box-shadow: 0 0 10px #e9d5ff;
+    }
+    .toggle-buttons button:hover,
+    .toggle-buttons button.active {
+      background: #c084fc;
+      color: #fff;
+      box-shadow: 0 0 20px #c084fc88;
+      transform: scale(1.05);
+    }
+    .card-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      padding: 10px 20px 50px;
+    }
+    .card {
+      background: #f9f3ff;
+      border: 1px solid #d8b4fe;
+      border-radius: 25px;
+      width: 320px;
+      overflow: hidden;
+      box-shadow: 0 0 20px #d8b4fe77;
+      transition: 0.4s ease;
+      position: relative;
+    }
+    .card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 0 30px #c084fcaa;
+    }
+    .card img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      border-bottom: 1px solid #d8b4fe;
+    }
+    .card h3 {
+      padding: 15px 10px 5px;
+      font-size: 18px;
+      color: #4b0082;
+      text-align: center;
+    }
+    .card .btn {
+      display: block;
+      margin: 15px auto 20px;
+      padding: 10px 20px;
+      background: #c084fc;
+      color: #fff;
+      border-radius: 25px;
+      font-weight: bold;
+      text-decoration: none;
+      width: fit-content;
+      transition: 0.3s ease;
+      box-shadow: 0 0 15px #e0cfff;
+    }
+    .card .btn:hover {
+      background: #a855f7;
+      box-shadow: 0 0 20px #c084fcaa;
+    }
+    .hidden {
+      display: none;
+    }
+    @media screen and (max-width: 768px) {
+      header {
+        font-size: 26px;
+      }
+      .toggle-buttons button {
+        margin: 10px 6px;
+        padding: 10px 20px;
+      }
+      .search-bar input {
+        width: 250px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>Prarambh - Commerce</header>
+
+<div class="search-bar">
+  <input type="text" id="searchInput" placeholder="Search Lectures or Notes...">
+</div>
+
+<div class="subject-tags" id="subjectTags">
+  <button data-subject="all" class="active">All</button>
+  <button data-subject="accounts">accounts</button>
+  <button data-subject="maths">Maths</button>
+  <button data-subject="business-studies">bussiness</button>
+  <button data-subject="economics">economics</button>
+ <button data-subject="applied-maths">applied Maths</button>
+</div>
+
+<div class="toggle-buttons">
+  <button id="lecturesBtn" class="active">Lectures</button>
+  <button id="notesBtn">Notes</button>
+</div>
+
+<!-- LECTURES SECTION -->
+<div id="lecturesSection" class="card-container">
+<!-- Accounts - Basic Accounting Terms -->
+<div class="card" data-subject="accounts" data-title="Basic Accounting Terms 1">
+    <img src="https://i.ibb.co/k6mTy71V/x.jpg" alt="Accounts">
+    <h3>Basic Accounting Terms - Lecture 1</h3>
+    <a href="https://www.youtube.com/live/N0UH3xznWko?si=5XYGMXXTUOU8aCFv" class="btn" target="_blank">Watch</a>
+</div>
+
+<div class="card" data-subject="accounts" data-title="Basic Accounting Terms 2">
+    <img src="https://i.ibb.co/k6mTy71V/x.jpg" alt="Accounts">
+    <h3>Basic Accounting Terms - Lecture 2</h3>
+    <a href="https://livetv-flax.vercel.app/Videoplayer.html?lessonurl=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4354736/174498147635838037481/index_3.m3u8" class="btn" target="_blank">Watch</a>
+</div>
+
+<div class="card" data-subject="accounts" data-title="Basic Accounting Terms 3">
+    <img src="https://i.ibb.co/k6mTy71V/x.jpg" alt="Accounts">
+    <h3>Basic Accounting Terms - Lecture 3</h3>
+    <a href="https://livetv-flax.vercel.app/Videoplayer.html?lessonurl=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4355332/174506775549578037481/index_3.m3u8" class="btn" target="_blank">Watch</a>
+</div>
+
+<div class="card" data-subject="accounts" data-title="Basic Accounting Terms 4">
+    <img src="https://i.ibb.co/k6mTy71V/x.jpg" alt="Accounts">
+    <h3>Basic Accounting Terms - Lecture 4</h3>
+    <a href="https://livetv-flax.vercel.app/Videoplayer.html?lessonurl=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4360049/174550144387958037481/index_3.m3u8" class="btn" target="_blank">Watch</a>
+</div>
+
+<!-- Accounts - Introduction to Accounting -->
+<div class="card" data-subject="accounts" data-title="Introduction to Accounting 1">
+    <img src="https://i.ibb.co/k6mTy71V/x.jpg" alt="Accounts">
+    <h3>Introduction to Accounting - Lecture 1</h3>
+    <a href="https://livetv-flax.vercel.app/Videoplayer.html?lessonurl=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4361169/174558615865988037481/index_3.m3u8" class="btn" target="_blank">Watch</a>
+</div>
+
+<div class="card" data-subject="accounts" data-title="Introduction to Accounting 2">
+    <img src="https://i.ibb.co/k6mTy71V/x.jpg" alt="Accounts">
+    <h3>Introduction to Accounting - Lecture 2</h3>
+    <a href="https://livetv-flax.vercel.app/Videoplayer.html?lessonurl=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4362045/174567417274348037481/index_3.m3u8" class="btn" target="_blank">Watch</a>
+</div>
+<!-- Accounts - Introduction to Accounting Lecture 3 -->
+<div class="card" data-subject="accounts" data-title="Introduction to accounting Lecture 3">
+  <img src="https://i.ibb.co/k6mTy71V/x.jpg" alt="Introduction to accounting Lecture 3">
+  <h3>Accounts - Introduction to accounting Lecture 3</h3>
+  <a href="https://livetv-flax.vercel.app/Videoplayer.html?lessonurl=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4367025/174610386875138037481/index_3.m3u8" class="btn">Watch</a>
+</div>
+
+<!-- Accounts - Introduction to Accounting Lecture 4 -->
+<div class="card" data-subject="accounts" data-title="Introduction to accounting Lecture 4">
+  <img src="https://i.ibb.co/k6mTy71V/x.jpg" alt="Introduction to accounting Lecture 4">
+  <h3>Accounts - Introduction to accounting Lecture 4</h3>
+  <a href="https://livetv-flax.vercel.app/Videoplayer.html?lessonurl=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4368221/174619101874588037481/index_3.m3u8" class="btn">Watch</a>
+</div>
+
+<!-- Economics - Micro Economics -->
+<div class="card" data-subject="economics" data-title="Micro Economics 1">
+    <img src="https://i.ibb.co/k6mTy71V/x.jpg" alt="Economics">
+    <h3>Micro Economics - Lecture 1</h3>
+    <a href="https://www.youtube.com/live/DC5GfUSomWc?si=-hb-v90NXxnoDxOR" class="btn" target="_blank">Watch</a>
+</div>
+
+<div class="card" data-subject="economics" data-title="Micro Economics 2">
+    <img src="https://i.ibb.co/k6mTy71V/x.jpg" alt="Economics">
+    <h3>Micro Economics - Lecture 2</h3>
+    <a href="https://livetv-flax.vercel.app/Videoplayer.html?lessonurl=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4354870/174499154434222805408/index_1.m3u8" class="btn" target="_blank">Watch</a>
+</div>
+
+<div class="card" data-subject="economics" data-title="Micro Economics 3">
+    <img src="https://i.ibb.co/k6mTy71V/x.jpg" alt="Economics">
+    <h3>Micro Economics - Lecture 3</h3>
+    <a href="https://livetv-flax.vercel.app/Videoplayer.html?lessonurl=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4355506/174513048136192805408/index_1.m3u8" class="btn" target="_blank">Watch</a>
+</div>
+
+<div class="card" data-subject="economics" data-title="Micro Economics 4">
+    <img src="https://i.ibb.co/k6mTy71V/x.jpg" alt="Economics">
+    <h3>Micro Economics - Lecture 4</h3>
+    <a href="https://livetv-flax.vercel.app/Videoplayer.html?lessonurl=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4360163/174551052232072805408/index_1.m3u8" class="btn" target="_blank">Watch</a>
+</div>
+
+<div class="card" data-subject="economics" data-title="Micro Economics 5">
+    <img src="https://i.ibb.co/k6mTy71V/x.jpg" alt="Economics">
+    <h3>Micro Economics - Lecture 5</h3>
+    <a href="https://livetv-flax.vercel.app/Videoplayer.html?lessonurl=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4361318/174559672274232805408/index_1.m3u8" class="btn" target="_blank">Watch</a>
+</div>
+
+<!-- Business Studies - Business Trade and Commerce -->
+<div class="card" data-subject="business-studies" data-title="Business Trade and Commerce 1">
+    <img src="https://i.ibb.co/k6mTy71V/x.jpg" alt="Business Studies">
+    <h3>Business Trade and Commerce - Lecture 1</h3>
+    <a href="https://www.youtube.com/live/PUa2-buHJII?si=nKOMtgZP4_pa_drT" class="btn" target="_blank">Watch</a>
+</div>
+
+<div class="card" data-subject="business-studies" data-title="Business Trade and Commerce 2">
+    <img src="https://i.ibb.co/k6mTy71V/x.jpg" alt="Business Studies">
+    <h3>Business Trade and Commerce - Lecture 2</h3>
+    <a href="https://livetv-flax.vercel.app/Videoplayer.html?lessonurl=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4352997/174481925589108661500/index_1.m3u8" class="btn" target="_blank">Watch</a>
+</div>
+
+<div class="card" data-subject="business-studies" data-title="Business Trade and Commerce 3">
+    <img src="https://i.ibb.co/k6mTy71V/x.jpg" alt="Business Studies">
+    <h3>Business Trade and Commerce - Lecture 3</h3>
+    <a href="https://livetv-flax.vercel.app/Videoplayer.html?lessonurl=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4354036/174490571525318661500/index_1.m3u8" class="btn" target="_blank">Watch</a>
+</div>
+
+<div class="card" data-subject="business-studies" data-title="Business Trade and Commerce 4">
+    <img src="https://i.ibb.co/k6mTy71V/x.jpg" alt="Business Studies">
+    <h3>Business Trade and Commerce - Lecture 4</h3>
+    <a href="https://livetv-flax.vercel.app/Videoplayer.html?lessonurl=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4356791/174525158582868661500/index_1.m3u8" class="btn" target="_blank">Watch</a>
+</div>
+
+<div class="card" data-subject="business-studies" data-title="Business Trade and Commerce 5">
+    <img src="https://i.ibb.co/k6mTy71V/x.jpg" alt="Business Studies">
+    <h3>Business Trade and Commerce - Lecture 5</h3>
+    <a href="https://livetv-flax.vercel.app/Videoplayer.html?lessonurl=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4357840/174533779119448661500/index_1.m3u8" class="btn" target="_blank">Watch</a>
+</div>
+
+<div class="card" data-subject="business-studies" data-title="Business Trade and Commerce 6">
+    <img src="https://i.ibb.co/k6mTy71V/x.jpg" alt="Business Studies">
+    <h3>Business Trade and Commerce - Lecture 6</h3>
+    <a href="https://livetv-flax.vercel.app/Videoplayer.html?lessonurl=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4358827/174541222825788661500/index_1.m3u8" class="btn" target="_blank">Watch</a>
+</div>
+<!-- Business Studies - Business Trade and Commerce Lecture 7 -->
+<div class="card" data-subject="business-studies" data-title="Business trade and commerce Lecture 7">
+  <img src="https://i.ibb.co/k6mTy71V/x.jpg" alt="Business trade and commerce Lecture 7">
+  <h3>Business Studies - Business trade and commerce Lecture 7</h3>
+  <a href="https://livetv-flax.vercel.app/Videoplayer.html?lessonurl=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4363370/174585516974368661500/index_3.m3u8" class="btn">Watch</a>
+</div>
+
+<!-- Business Studies - Business Trade and Commerce Lecture 8 -->
+<div class="card" data-subject="business-studies" data-title="Business trade and commerce Lecture 8">
+  <img src="https://i.ibb.co/k6mTy71V/x.jpg" alt="Business trade and commerce Lecture 8">
+  <h3>Business Studies - Business trade and commerce Lecture 8</h3>
+  <a href="https://livetv-flax.vercel.app/Videoplayer.html?lessonurl=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4364782/174594193147598661500/index_3.m3u8" class="btn">Watch</a>
+</div>
+
+<!-- Business Studies - Doubt Solving Lecture 9 -->
+<div class="card" data-subject="business-studies" data-title="Doubt solving Lecture 9">
+  <img src="https://i.ibb.co/k6mTy71V/x.jpg" alt="Doubt solving Lecture 9">
+  <h3>Business Studies - Doubt solving Lecture 9</h3>
+  <a href="https://livetv-flax.vercel.app/Videoplayer.html?lessonurl=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4365823/174601759672428661500/index_3.m3u8" class="btn">Watch</a>
+</div>
+<!-- Applied Maths - Binary Numbers -->
+<div class="card" data-subject="applied-maths" data-title="Binary Numbers">
+    <img src="https://i.ibb.co/k6mTy71V/x.jpg" alt="Applied Maths">
+    <h3>Binary Numbers</h3>
+    <a href="https://livetv-flax.vercel.app/Videoplayer.html?lessonurl=https://d3cx6qbbd4cbso.cloudfront.net/file_library/videos/vod_non_drm_ios/4357626/1745323611_8843412748102647/sunny/1745323382934_558618253735601500_video_VOD.m3u8" class="btn" target="_blank">Watch</a>
+</div>
+
+<div class="card" data-subject="maths" data-title="Sets Lecture 1">
+  <img src="https://i.ibb.co/k6mTy71V/x.jpg" alt="Maths">
+  <h3>Sets Lecture 1</h3>
+  <a href="https://www.youtube.com/live/vcqyIgZfCog?si=eIa2REX2GlPQDiYQ" class="btn" target="_blank">Watch</a>
+</div>
+
+<div class="card" data-subject="maths" data-title="Sets Lecture 2">
+  <img src="https://i.ibb.co/k6mTy71V/x.jpg" alt="Maths">
+  <h3>Sets Lecture 2</h3>
+  <a href="https://livetv-flax.vercel.app/Videoplayer.html?lessonurl=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4353889/174489667533668296383/index_3.m3u8" class="btn" target="_blank">Watch</a>
+</div>
+
+<div class="card" data-subject="maths" data-title="Sets Lecture 3">
+  <img src="https://i.ibb.co/k6mTy71V/x.jpg" alt="Maths">
+  <h3>Sets Lecture 3</h3>
+  <a href="https://livetv-flax.vercel.app/Videoplayer.html?lessonurl=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4356690/174524049345081097666/index_3.m3u8" class="btn" target="_blank">Watch</a>
+</div>
+
+<div class="card" data-subject="maths" data-title="Sets Lecture 4">
+  <img src="https://i.ibb.co/k6mTy71V/x.jpg" alt="Maths">
+  <h3>Sets Lecture 4</h3>
+  <a href="https://livetv-flax.vercel.app/Videoplayer.html?lessonurl=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4357736/174532685248651097666/index_3.m3u8" class="btn" target="_blank">Watch</a>
+</div>
+
+<div class="card" data-subject="maths" data-title="Sets Lecture 5">
+  <img src="https://i.ibb.co/k6mTy71V/x.jpg" alt="Maths">
+  <h3>Sets Lecture 5</h3>
+  <a href="https://livetv-flax.vercel.app/Videoplayer.html?lessonurl=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4359038/174542426999201097666/index_3.m3u8" class="btn" target="_blank">Watch</a>
+</div>
+<!-- Maths - Complex Numbers Lectures 1-4 -->
+<div class="card" data-subject="maths" data-title="Complex Numbers Lecture 1">
+  <img src="https://i.ibb.co/k6mTy71V/x.jpg" alt="Complex Numbers">
+  <h3>Maths - Complex Numbers Lecture 1</h3>
+  <a href="https://livetv-flax.vercel.app/Videoplayer.html?lessonurl=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4363249/174584513794761261798/index_3.m3u8" class="btn">Watch</a>
+</div>
+
+<div class="card" data-subject="maths" data-title="Complex Numbers Lecture 2">
+  <img src="https://i.ibb.co/k6mTy71V/x.jpg" alt="Complex Numbers">
+  <h3>Maths - Complex Numbers Lecture 2</h3>
+  <a href="https://livetv-flax.vercel.app/Videoplayer.html?lessonurl=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4364488/174592875146111261798/index_3.m3u8" class="btn">Watch</a>
+</div>
+
+<div class="card" data-subject="maths" data-title="Complex Numbers Lecture 3">
+  <img src="https://i.ibb.co/k6mTy71V/x.jpg" alt="Complex Numbers">
+  <h3>Maths - Complex Numbers Lecture 3</h3>
+  <a href="https://livetv-flax.vercel.app/Videoplayer.html?lessonurl=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4366039/174602857795961261798/index_3.m3u8" class="btn">Watch</a>
+</div>
+
+<div class="card" data-subject="maths" data-title="Complex Numbers Lecture 4">
+  <img src="https://i.ibb.co/k6mTy71V/x.jpg" alt="Complex Numbers">
+  <h3>Maths - Complex Numbers Lecture 4</h3>
+  <a href="https://livetv-flax.vercel.app/Videoplayer.html?lessonurl=https://d1qcficr3lu37x.cloudfront.net/file_library/videos/channel_vod_non_drm_hls/4367111/174610963914991261798/index_3.m3u8" class="btn">Watch</a>
+</div>
+
+</div>
+
+<!-- NOTES SECTION -->
+<div id="notesSection" class="card-container hidden">
+<div class="card" data-subject="accounts" data-title="Basic Accounting Terms 1">
+  <img src="https://i.ibb.co/sd69yHbX/IMG-20250427-093758.jpg" alt="Notes">
+  <h3>Accounts - Basic Accounting Terms 1</h3>
+  <a href="https://dxixtlyravvxx.cloudfront.net/540admin_v1/file_manager/pdf/803820482603262600.pdf" class="btn" target="_blank">Download</a>
+</div>
+
+<div class="card" data-subject="accounts" data-title="Basic Accounting Terms 2">
+  <img src="https://i.ibb.co/sd69yHbX/IMG-20250427-093758.jpg" alt="Notes">
+  <h3>Accounts - Basic Accounting Terms 2</h3>
+  <a href="https://dxixtlyravvxx.cloudfront.net/540admin_v1/file_manager/pdf/178085380838346560.pdf" class="btn" target="_blank">Download</a>
+</div>
+
+<div class="card" data-subject="accounts" data-title="Basic Accounting Terms 3">
+  <img src="https://i.ibb.co/sd69yHbX/IMG-20250427-093758.jpg" alt="Notes">
+  <h3>Accounts - Basic Accounting Terms 3</h3>
+  <a href="https://dxixtlyravvxx.cloudfront.net/540admin_v1/file_manager/pdf/154070792775245700.pdf" class="btn" target="_blank">Download</a>
+</div>
+<div class="card" data-subject="accounts" data-title="Introduction to Accounting 1">
+  <img src="https://i.ibb.co/sd69yHbX/IMG-20250427-093758.jpg" alt="Notes">
+  <h3>Accounts - Introduction to Accounting 1</h3>
+  <a href="https://dxixtlyravvxx.cloudfront.net/540admin_v1/file_manager/pdf/863964617756794500.pdf" class="btn" target="_blank">Download</a>
+</div>
+
+<div class="card" data-subject="accounts" data-title="Introduction to Accounting 2">
+  <img src="https://i.ibb.co/sd69yHbX/IMG-20250427-093758.jpg" alt="Notes">
+  <h3>Accounts - Introduction to Accounting 2</h3>
+  <a href="https://dxixtlyravvxx.cloudfront.net/540admin_v1/file_manager/pdf/731061565495302100.pdf" class="btn" target="_blank">Download</a>
+</div>
+<div class="card" data-subject="economics" data-title="Micro Economics 1">
+  <img src="https://i.ibb.co/sd69yHbX/IMG-20250427-093758.jpg" alt="Notes">
+  <h3>Economics - Micro Economics 1</h3>
+  <a href="https://dxixtlyravvxx.cloudfront.net/540admin_v1/file_manager/pdf/305909432030904900.pdf" class="btn" target="_blank">Download</a>
+</div>
+
+<div class="card" data-subject="economics" data-title="Micro Economics 2">
+  <img src="https://i.ibb.co/sd69yHbX/IMG-20250427-093758.jpg" alt="Notes">
+  <h3>Economics - Micro Economics 2</h3>
+  <a href="https://dxixtlyravvxx.cloudfront.net/540admin_v1/file_manager/pdf/527955388202687700.pdf" class="btn" target="_blank">Download</a>
+</div>
+
+<div class="card" data-subject="economics" data-title="Micro Economics 3">
+  <img src="https://i.ibb.co/sd69yHbX/IMG-20250427-093758.jpg" alt="Notes">
+  <h3>Economics - Micro Economics 3</h3>
+  <a href="https://dxixtlyravvxx.cloudfront.net/540admin_v1/file_manager/pdf/699798709230157700.pdf" class="btn" target="_blank">Download</a>
+</div>
+
+<div class="card" data-subject="economics" data-title="Micro Economics 4">
+  <img src="https://i.ibb.co/sd69yHbX/IMG-20250427-093758.jpg" alt="Notes">
+  <h3>Economics - Micro Economics 4</h3>
+  <a href="https://dxixtlyravvxx.cloudfront.net/540admin_v1/file_manager/pdf/156981228681625100.pdf" class="btn" target="_blank">Download</a>
+</div>
+<div class="card" data-subject="business-studies" data-title="Business Trade and Commerce 1">
+  <img src="https://i.ibb.co/sd69yHbX/IMG-20250427-093758.jpg" alt="Notes">
+  <h3>Business Studies - Business Trade and Commerce 1</h3>
+  <a href="https://dxixtlyravvxx.cloudfront.net/540admin_v1/file_manager/pdf/277767275437755360.pdf" class="btn" target="_blank">Download</a>
+</div>
+
+<div class="card" data-subject="business-studies" data-title="Business Trade and Commerce 2">
+  <img src="https://i.ibb.co/sd69yHbX/IMG-20250427-093758.jpg" alt="Notes">
+  <h3>Business Studies - Business Trade and Commerce 2</h3>
+  <a href="https://dxixtlyravvxx.cloudfront.net/540admin_v1/file_manager/pdf/289731167636018000.pdf" class="btn" target="_blank">Download</a>
+</div>
+
+<div class="card" data-subject="business-studies" data-title="Business Trade and Commerce 3">
+  <img src="https://i.ibb.co/sd69yHbX/IMG-20250427-093758.jpg" alt="Notes">
+  <h3>Business Studies - Business Trade and Commerce 3</h3>
+  <a href="https://dxixtlyravvxx.cloudfront.net/540admin_v1/file_manager/pdf/818707773744364900.pdf" class="btn" target="_blank">Download</a>
+</div>
+
+<div class="card" data-subject="business-studies" data-title="Business Trade and Commerce 4">
+  <img src="https://i.ibb.co/sd69yHbX/IMG-20250427-093758.jpg" alt="Notes">
+  <h3>Business Studies - Business Trade and Commerce 4</h3>
+  <a href="https://dxixtlyravvxx.cloudfront.net/540admin_v1/file_manager/pdf/445097973128453200.pdf" class="btn" target="_blank">Download</a>
+</div>
+
+<div class="card" data-subject="business-studies" data-title="Business Trade and Commerce 5">
+  <img src="https://i.ibb.co/sd69yHbX/IMG-20250427-093758.jpg" alt="Notes">
+  <h3>Business Studies - Business Trade and Commerce 5</h3>
+  <a href="https://dxixtlyravvxx.cloudfront.net/540admin_v1/file_manager/pdf/533526925056925500.pdf" class="btn" target="_blank">Download</a>
+</div>
+<div class="card" data-subject="maths" data-title="Maths Notes 1">
+  <img src="https://i.ibb.co/sd69yHbX/IMG-20250427-093758.jpg" alt="Maths Notes">
+  <h3>Maths - Sets Notes 1</h3>
+  <a href="https://dxixtlyravvxx.cloudfront.net/540admin_v1/file_manager/pdf/792174537923493500.pdf" class="btn" target="_blank">Download</a>
+</div>
+
+<div class="card" data-subject="maths" data-title="Maths Notes 2">
+  <img src="https://i.ibb.co/sd69yHbX/IMG-20250427-093758.jpg" alt="Maths Notes">
+  <h3>Maths - Sets Notes 2</h3>
+  <a href="https://dxixtlyravvxx.cloudfront.net/540/admin_v1/file_manager/pdf/5110820Sets%20L2.pdf_Sets%20L2.pdf" class="btn" target="_blank">Download</a>
+</div>
+
+<div class="card" data-subject="maths" data-title="Maths Notes 3">
+  <img src="https://i.ibb.co/sd69yHbX/IMG-20250427-093758.jpg" alt="Maths Notes">
+  <h3>Maths - Sets Notes 3</h3>
+  <a href="https://dxixtlyravvxx.cloudfront.net/540admin_v1/file_manager/pdf/798181586567513700.pdf" class="btn" target="_blank">Download</a>
+</div>
+
+<div class="card" data-subject="maths" data-title="Maths Notes 4">
+  <img src="https://i.ibb.co/sd69yHbX/IMG-20250427-093758.jpg" alt="Maths Notes">
+  <h3>Maths - Sets Notes 4</h3>
+  <a href="https://dxixtlyravvxx.cloudfront.net/540admin_v1/file_manager/pdf/452267096067597250.pdf" class="btn" target="_blank">Download</a>
+</div>
+
+<div class="card" data-subject="maths" data-title="Maths DPP">
+  <img src="https://i.ibb.co/sd69yHbX/IMG-20250427-093758.jpg" alt="Maths DPP">
+  <h3>Maths - Sets DPP</h3>
+  <a href="https://dxixtlyravvxx.cloudfront.net/540admin_v1/file_manager/pdf/759054519832697600.pdf" class="btn" target="_blank">Download</a>
+</div>
+<div class="card" data-subject="accounts" data-title="Introduction to Accounting Notes 3">
+  <img src="https://i.ibb.co/sd69yHbX/IMG-20250427-093758.jpg" alt="Introduction to Accounting">
+  <h3>Accounts - Introduction to Accounting Notes 3</h3>
+  <a href="https://dxixtlyravvxx.cloudfront.net/540admin_v1/file_manager/pdf/501212161493975940.pdf" class="btn" target="_blank">View Note</a>
+</div>
+
+<div class="card" data-subject="business-studies" data-title="Business Trade and Commerce Lecture 6">
+  <img src="https://i.ibb.co/sd69yHbX/IMG-20250427-093758.jpg" alt="Business Trade and Commerce">
+  <h3>Business Studies - Business Trade and Commerce Lecture 6</h3>
+  <a href="https://dxixtlyravvxx.cloudfront.net/540admin_v1/file_manager/pdf/757750182556575400.pdf" class="btn" target="_blank">View Note</a>
+</div>
+
+<div class="card" data-subject="business-studies" data-title="Business Trade and Commerce Gullak 1">
+  <img src="https://i.ibb.co/sd69yHbX/IMG-20250427-093758.jpg" alt="Business Trade and Commerce Gullak">
+  <h3>Business Studies - Business Trade and Commerce Gullak 1</h3>
+  <a href="https://dxixtlyravvxx.cloudfront.net/540admin_v1/file_manager/pdf/316602523849184500.pdf" class="btn" target="_blank">View Note</a>
+</div>
+<script>
+  const lecturesBtn = document.getElementById('lecturesBtn');
+  const notesBtn = document.getElementById('notesBtn');
+  const lecturesSection = document.getElementById('lecturesSection');
+  const notesSection = document.getElementById('notesSection');
+  const searchInput = document.getElementById('searchInput');
+  const subjectTags = document.getElementById('subjectTags');
+  let selectedSubject = "all";
+
+  lecturesBtn.onclick = () => {
+    lecturesBtn.classList.add('active');
+    notesBtn.classList.remove('active');
+    lecturesSection.classList.remove('hidden');
+    notesSection.classList.add('hidden');
+    searchInput.value = "";
+    filterCards();
+  };
+
+  notesBtn.onclick = () => {
+    notesBtn.classList.add('active');
+    lecturesBtn.classList.remove('active');
+    notesSection.classList.remove('hidden');
+    lecturesSection.classList.add('hidden');
+    searchInput.value = "";
+    filterCards();
+  };
+
+  subjectTags.addEventListener('click', (e) => {
+    if (e.target.tagName === "BUTTON") {
+      document.querySelectorAll('.subject-tags button').forEach(btn => btn.classList.remove('active'));
+      e.target.classList.add('active');
+      selectedSubject = e.target.dataset.subject;
+      filterCards();
+    }
+  });
+
+  searchInput.addEventListener('keyup', filterCards);
+
+  function filterCards() {
+    const searchText = searchInput.value.toLowerCase();
+    const activeSection = !lecturesSection.classList.contains('hidden') ? lecturesSection : notesSection;
+    const cards = activeSection.querySelectorAll('.card');
+
+    cards.forEach(card => {
+      const subject = card.dataset.subject.toLowerCase();
+      const title = card.dataset.title.toLowerCase();
+      const matchSubject = selectedSubject === 'all' || subject === selectedSubject;
+      const matchText = title.includes(searchText);
+      card.style.display = (matchSubject && matchText) ? 'block' : 'none';
+    });
+  }
+</script>
+
+</body>
+</html>

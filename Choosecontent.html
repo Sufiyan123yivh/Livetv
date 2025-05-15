@@ -1,0 +1,286 @@
+<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GET APK'S - Explore</title>
+  <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Urbanist', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #6a1b9a, #3f51b5); /* Purple and Blue Gradient */
+      min-height: 100vh;
+      overflow-x: hidden;
+      overscroll-behavior-y: contain;
+      padding: 50px 20px;
+      position: relative;
+    }
+
+    main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 40px;
+    }
+
+    h1 {
+      font-size: 2rem;
+      color: #f1f1f1;
+      text-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+      letter-spacing: 2px;
+      text-align: center;
+    }
+
+    /* Snowball Animation */
+    .snowball {
+      position: absolute;
+      background-color: rgba(255, 255, 255, 0.8);
+      border-radius: 50%;
+      opacity: 0.8;
+      animation: snowFall 10s infinite linear;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    @keyframes snowFall {
+      0% {
+        transform: translateY(-50px);
+        opacity: 0.8;
+      }
+      100% {
+        transform: translateY(100vh);
+        opacity: 0.5;
+      }
+    }
+
+    /* 5 Snowballs */
+    .snowball:nth-child(1) {
+      width: 12px;
+      height: 12px;
+      top: 10%;
+      left: 15%;
+      animation-duration: 12s;
+      animation-delay: 2s;
+    }
+
+    .snowball:nth-child(2) {
+      width: 8px;
+      height: 8px;
+      top: 30%;
+      left: 60%;
+      animation-duration: 10s;
+      animation-delay: 3s;
+    }
+
+    .snowball:nth-child(3) {
+      width: 10px;
+      height: 10px;
+      top: 50%;
+      left: 25%;
+      animation-duration: 9s;
+      animation-delay: 5s;
+    }
+
+    .snowball:nth-child(4) {
+      width: 14px;
+      height: 14px;
+      top: 70%;
+      left: 80%;
+      animation-duration: 11s;
+      animation-delay: 7s;
+    }
+
+    .snowball:nth-child(5) {
+      width: 6px;
+      height: 6px;
+      top: 90%;
+      left: 50%;
+      animation-duration: 8s;
+      animation-delay: 6s;
+    }
+
+    /* Container Style */
+    .container {
+      display: flex;
+      gap: 40px;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      z-index: 5;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 30px;
+      text-align: center;
+      box-shadow: 0 4px 60px rgba(255, 255, 255, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      width: 300px;
+      height: 400px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .card:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 80px rgba(255, 255, 255, 0.3);
+    }
+
+    .card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      border-radius: 10px;
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover img {
+      transform: scale(1.05);
+    }
+
+    .card h3 {
+      color: #ecf0f1;
+      margin: 15px 0;
+      font-size: 1.6rem;
+    }
+
+    .card button {
+      background: #8e24aa;
+      border: none;
+      padding: 12px 20px;
+      font-weight: bold;
+      border-radius: 50px;
+      color: #fff;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      margin-top: 10px;
+    }
+
+    .card button:hover {
+      background: #7b1fa2;
+    }
+
+    /* Loader */
+    .loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .circle-loader {
+      width: 70px;
+      height: 70px;
+      border: 6px solid #8e24aa;
+      border-top: 6px solid transparent;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Telegram Button */
+    .telegram-btn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background-color: #0088cc;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+      cursor: pointer;
+      z-index: 999;
+    }
+
+    .telegram-btn img {
+      width: 30px;
+      height: 30px;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- Snowball Animation -->
+<div class="snowball"></div>
+<div class="snowball"></div>
+<div class="snowball"></div>
+<div class="snowball"></div>
+<div class="snowball"></div>
+
+<main>
+  <h1>What do you want to explore?</h1>
+
+  <div class="container">
+    <!-- Live Classes Section -->
+    <div class="card">
+      <img src="images/file-00000000db906230bebb51991162680e-conversation-id-680e41e6-2c2c-8013-9f55-a59109e52282-message-i.png" alt="Live Classes">
+      <h3>Live Classes</h3>
+      <button onclick="redirectWithLoader('liveschedule.html')">Join Now</button>
+    </div>
+
+    <!-- Books Section -->
+    <div class="card">
+      <img src="images/IMG-20250427-093758.jpg" alt="Books">
+      <h3>Books</h3>
+      <button onclick="redirectWithLoader('Books.html')">Open Books</button>
+    </div>
+
+    <!-- Batches Section -->
+    <div class="card">
+      <img src="images/IMG-20250427-093724.jpg" alt="Batches">
+      <h3>Batches</h3>
+      <button onclick="redirectWithLoader('Batches.html')">Explore Batches</button>
+    </div>
+  </div>
+</main>
+
+<!-- Loader -->
+<div class="loader" id="pageLoader">
+  <div class="circle-loader"></div>
+</div>
+
+<!-- Telegram Button -->
+<div class="telegram-btn" onclick="window.location.href='https://t.me/getapks1';">
+  <img src="images/Telegram_logo.svg" alt="Telegram">
+</div>
+
+<script>
+  function redirectWithLoader(url) {
+    const loader = document.getElementById('pageLoader');
+    loader.style.display = 'flex';
+    setTimeout(() => {
+      window.location.href = url;
+    }, 1500);
+  }
+</script>
+
+
+
+</body></html>

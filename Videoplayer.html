@@ -2,6 +2,53 @@
 <html lang="en">
 
 <head>
+
+<style>
+  .telegram-icon-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000; /* Ensure it stays on top of other elements */
+  }
+
+  .telegram-icon-link {
+    display: block;
+    width: 60px;
+    height: 60px;
+    background-color: #2AABEE; /* Telegram's brand color */
+    border-radius: 50%;
+    text-align: center;
+    line-height: 60px;
+    color: white;
+    font-size: 30px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s ease;
+  }
+
+  .telegram-icon-link:hover {
+    background-color: #1e88c2; /* Darker shade on hover */
+  }
+
+  /* You can use the Telegram logo as a text character (Unicode) */
+  .telegram-icon {
+    font-family: sans-serif; /* Use a standard font that supports Unicode */
+  }
+
+  /* Alternatively, you can use an image or SVG */
+  /*
+  .telegram-icon-image {
+    width: 30px;
+    height: 30px;
+    vertical-align: middle;
+  }
+  */
+</style>
+
+<div class="telegram-icon-container">
+  <a href="https://t.me/YourTelegramUsername" target="_blank" class="telegram-icon-link">
+    <span class="telegram-icon">&#x26AA;</span> </a>
+</div>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Video - Player | GET APKS</title>

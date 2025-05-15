@@ -1,0 +1,292 @@
+<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Power Study - Home</title>
+  <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;700&display=swap" rel="stylesheet">
+
+
+<style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Urbanist', sans-serif;
+    }
+    html, body {
+      height: 100%;
+      background: linear-gradient(135deg, #e0e0e0, #ffffff);
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+    .loader-wrapper {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      background: #eee;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      z-index: 9999;
+    }
+    .box1, .box2 {
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      border: 3px solid;
+      border-radius: 20px;
+      background: transparent;
+    }
+    .box1 {
+      border-color: #8e24aa;
+      animation: rotate1 2.5s linear infinite;
+    }
+    .box2 {
+      border-color: #5c6bc0;
+      animation: rotate2 3s linear infinite;
+    }
+    @keyframes rotate1 {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    @keyframes rotate2 {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(-360deg); }
+    }
+    .loading-text {
+      margin-top: 160px;
+      color: #5c6bc0;
+      font-size: 1.6rem;
+      font-weight: bold;
+    }
+
+    #main-content {
+      display: none;
+      position: relative;
+      z-index: 2;
+    }
+    header {
+      width: 100%;
+      padding: 20px 30px;
+      background: rgba(255,255,255,0.6);
+      backdrop-filter: blur(10px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #ccc;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    header h1 {
+      font-size: 1.8rem;
+      color: #8e24aa;
+      text-shadow: 0 0 8px #b39ddb;
+    }
+    .menu-btn {
+      background: #8e24aa;
+      border: none;
+      padding: 10px 20px;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      color: white;
+      font-size: 1rem;
+    }
+
+    .drawer {
+      position: absolute;
+      top: 80px;
+      left: 0;
+      width: 100%;
+      background: rgba(142,36,170,0.1);
+      backdrop-filter: blur(20px);
+      padding: 20px;
+      transform: translateY(-100%);
+      transition: 0.5s;
+      z-index: 9;
+    }
+    .drawer.open {
+      transform: translateY(0);
+    }
+    .drawer button {
+      background: #8e24aa;
+      border: none;
+      padding: 10px;
+      margin: 10px 0;
+      color: white;
+      border-radius: 8px;
+      width: 100%;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .center-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin-top: 50px;
+      text-align: center;
+      padding: 40px 20px;
+    }
+    .center-box img {
+      width: 120px;
+      margin-bottom: 20px;
+    }
+    .center-box h2 {
+      color: #333;
+      margin-bottom: 20px;
+      font-size: 2rem;
+    }
+    .get-started {
+      padding: 12px 30px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      background: #8e24aa;
+      color: white;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      overflow: hidden;
+      position: relative;
+      transition: 0.5s;
+    }
+
+    .courses-section {
+      background: #111;
+      padding: 50px 20px;
+      color: white;
+    }
+    .courses-section h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 2rem;
+      color: #fdd835;
+    }
+    .courses-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+    .course-card {
+      background: #222;
+      border-radius: 12px;
+      overflow: hidden;
+      text-align: center;
+      padding: 20px;
+      transition: 0.3s;
+      border: 1px solid #333;
+    }
+    .course-card img {
+      width: 100px;
+      height: 100px;
+      object-fit: contain;
+      margin-bottom: 15px;
+    }
+    .course-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 20px #8e24aa;
+    }
+
+    .bottom-section {
+      background: #222;
+      color: white;
+      text-align: center;
+      padding: 40px 20px;
+    }
+    .bottom-section h3 {
+      margin-bottom: 15px;
+      color: #fdd835;
+    }
+    .bottom-buttons {
+      margin-top: 20px;
+    }
+    .bottom-buttons button {
+      margin: 10px;
+      padding: 10px 20px;
+      border: none;
+      background: #8e24aa;
+      color: white;
+      border-radius: 10px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .bottom-buttons button:hover {
+      background: #5c6bc0;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="loader-wrapper" id="loader">
+  <div class="box1"></div>
+  <div class="box2"></div>
+  <div class="loading-text">Loading GET APKS...</div>
+</div>
+
+<div id="main-content">
+  <header>
+    <h1>NEXTTOPPERBY GETAPKS</h1>
+    <button class="menu-btn" onclick="toggleDrawer()">Menu</button>
+  </header>
+
+  <div class="drawer" id="drawer">
+    <button onclick="toggleDrawer()">Close</button>
+    <button onclick="window.location.href='Batches.html'">Explore Courses</button>
+    <button onclick="window.location.href='Books.html'">Acess Books</button>
+    <button onclick="window.location.href='liveschedule.html'">GET LIVE CLASSES</button>
+  </div>
+
+  <div class="center-box">
+    <img src="images/IMG-20250425-212712-358.jpg" alt="Power Study Logo">
+    <h2>Welcome to NEXT-TOPPERS</h2>
+    <button class="get-started" onclick="window.location.href='Choosecontent.html'">Get Started</button>
+  </div>
+
+  <section class="courses-section">
+    <h2>Our Courses</h2>
+    <div class="courses-grid">
+      <div class="course-card">
+        <img src="images/images-3-2.jpg" alt="Physics">
+        <h4>NEXT TOPPERS</h4>
+      </div>
+      <div class="course-card">
+        <img src="images/images.png" alt="Biology">
+        <h4>PHYSICS WAALAH</h4>
+      </div>
+
+  </div></section>
+
+  <div class="bottom-section">
+    <h3>Power Study - The Free Learning Platform</h3>
+    <p>Providing top-quality learning materials, lectures, and notes absolutely free for everyone.</p>
+
+    <div class="bottom-buttons">
+      <button onclick="window.location.href='https://tinyurl.com/y6ctcase'">Contact Owner</button>
+      <button onclick="window.location.href='https://tinyurl.com/4kkrs2n3'">Meet Developer</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function toggleDrawer() {
+  document.getElementById('drawer').classList.toggle('open');
+}
+
+window.addEventListener("load", () => {
+  setTimeout(() => {
+    document.getElementById("loader").style.opacity = 0;
+    setTimeout(() => {
+      document.getElementById("loader").style.display = "none";
+      document.getElementById("main-content").style.display = "block";
+    }, 500);
+  }, 2000);
+});
+</script>
+
+
+</body></html>

@@ -479,3 +479,101 @@ http://txm1.flysat.live:2089/152099290352684/152082825718580/201924
 http://144.217.70.181:9587/hin2/ZEECLASSICHD/tracks-v1a1/mono.m3u8?token=test
 #EXTINF:-1 tvg-chno="6764444434890064322" group-title="Pakistan cricket ",PTV HOME
 http://txm1.flysat.live:2089/152099290352684/152082825718580/201866
+#EXTINF:-1 tvg-id="" tvg-logo="" group-title="INDIAN | KIDS Cartoon",***KIDS***
+https://joker-verse.vercel.app/opplex/live/106148.m3u8?uid=7971910783&pass=67383138
+#EXTINF:-1 tvg-id="" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Cartoon_Network_2010_logo.svg/2000px-Cartoon_Network_2010_logo.svg.png" group-title="INDIAN | KIDS Cartoon",IN: Cartoon Network
+https://joker-verse.vercel.app/opplex/live/150478.m3u8?uid=7971910783&pass=67383138
+#EXTINF:-1 tvg-id="" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/8/89/POGO-logo.png" group-title="INDIAN | KIDS Cartoon",IN: Pogo
+https://joker-verse.vercel.app/opplex/live/150483.m3u8?uid=7971910783&pass=67383138
+#EXTINF:-1 tvg-id="" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/c/c5/Cartoon_Network_HD%2B_India_logo.png" group-title="INDIAN | KIDS Cartoon",IN: Cartoon Network HD+
+https://joker-verse.vercel.app/opplex/live/153154.m3u8?uid=7971910783&pass=67383138
+#EXTINF:-1 tvg-id="" tvg-logo="https://static.epg.best/in/SonyYAY.in.png" group-title="INDIAN | KIDS Cartoon",IN | Sony yay
+https://joker-verse.vercel.app/opplex/live/26187.m3u8?uid=7971910783&pass=67383138
+#EXTINF:-1 tvg-id="" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/f/f2/Hungama_tv_logo.png" group-title="INDIAN | KIDS Cartoon",IN: Hungama**
+https://joker-verse.vercel.app/opplex/live/150480.m3u8?uid=7971910783&pass=67383138
+#EXTINF:-1 tvg-id="" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Nickelodeon_2009_logo.svg/1200px-Nickelodeon_2009_logo.svg.png" group-title="INDIAN | KIDS Cartoon",IN: Nick
+https://joker-verse.vercel.app/opplex/live/150482.m3u8?uid=7971910783&pass=67383138
+#EXTINF:-1 tvg-id="" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Nick_Jr._logo_2009.svg/2560px-Nick_Jr._logo_2009.svg.png" group-title="INDIAN | KIDS Cartoon",IND: Nick Junior
+https://joker-verse.vercel.app/opplex/live/153156.m3u8?uid=7971910783&pass=67383138
+#EXTINF:-1 tvg-id="" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/2016_Discovery_Kids_logo.svg/220px-2016_Discovery_Kids_logo.svg.png" group-title="INDIAN | KIDS Cartoon",Discovery kids
+https://joker-verse.vercel.app/opplex/live/76723.m3u8?uid=7971910783&pass=67383138
+#EXTINF:-1 tvg-id="" tvg-logo="https://upload.wikimedia.org/wikipedia/en/thumb/b/bb/Disney_Junior.svg/1200px-Disney_Junior.svg.png" group-title="INDIAN | KIDS Cartoon",IN: Disney Junior
+https://joker-verse.vercel.app/opplex/live/153175.m3u8?uid=7971910783&pass=67383138
+#EXTINF:-1 tvg-id="" tvg-logo="" group-title="INDIAN | KIDS Cartoon",KIDS: Chutti Tv
+https://joker-verse.vercel.app/opplex/live/150479.m3u8?uid=7971910783&pass=67383138
+#EXTINF:-1 tvg-id="" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/2014_Disney_Channel_logo.svg/1200px-2014_Disney_Channel_logo.svg.png" group-title="INDIAN | KIDS Cartoon",IN | DISNEY HD
+https://joker-verse.vercel.app/opplex/live/167551.m3u8?uid=7971910783&pass=67383138
+#EXTINF:-1 tvg-id="" tvg-logo="https://static.epg.best/in/NickHDPlus.in.png" group-title="INDIAN | KIDS Cartoon",IN: NICK SONIC
+https://joker-verse.vercel.app/opplex/live/34011.m3u8?uid=7971910783&pass=67383138
+#EXTINF:-1 tvg-id="" tvg-logo="https://static.epg.best/in/NickHDPlus.in.png" group-title="INDIAN | KIDS Cartoon",NICK HD+ [FHD]
+https://joker-verse.vercel.app/opplex/live/76722.m3u8?uid=7971910783&pass=67383138
+#EXTINF:-1 tvg-id="" tvg-logo="http://b1g.fun/logos2/kids_zone.jpg" group-title="INDIAN | KIDS Cartoon",PK | Kids Zone+ HD
+https://joker-verse.vercel.app/opplex/live/383066.m3u8?uid=7971910783&pass=67383138
+#EXTINF:-1 tvg-id="" tvg-logo="https://upload.wikimedia.org/wikipedia/en/3/3b/Motu_Patlu.Jpg" group-title="INDIAN | KIDS Cartoon",24/7 MOTU PATLU 01
+https://joker-verse.vercel.app/opplex/live/307079.m3u8?uid=7971910783&pass=67383138
+#EXTINF:-1 tvg-id="" tvg-logo="https://e7.pngegg.com/pngimages/990/187/png-clipart-motu-patlu-television-show-animated-film-nickelodeon-motu-patlu-television-food.png" group-title="INDIAN | KIDS Cartoon",24/7 MOTU PATLU 02
+https://joker-verse.vercel.app/opplex/live/311373.m3u8?uid=7971910783&pass=67383138
+#EXTINF:-1 tvg-id="" tvg-logo="https://w7.pngwing.com/pngs/352/597/png-transparent-shiva-nickelodeon-sonic-cartoon-television-show-shiva-sports-equipment-fictional-character-pakdam-pakdai-thumbnail.png" group-title="INDIAN | KIDS Cartoon",24/7 SHIVA
+https://joker-verse.vercel.app/opplex/live/342074.m3u8?uid=7971910783&pass=67383138
+#EXTINF:-1 tvg-id="" tvg-logo="" group-title="INDIAN | KIDS Cartoon",24/7 CHUCHU TV 
+https://joker-verse.vercel.app/opplex/live/340807.m3u8?uid=7971910783&pass=67383138
+#EXTINF:-1 tvg-id="" tvg-logo="https://upload.wikimedia.org/wikipedia/en/thumb/f/f7/Baalveer_Returns_Title_Card.jpg/220px-Baalveer_Returns_Title_Card.jpg" group-title="INDIAN | KIDS Cartoon",24/7 Baal Veer 
+https://joker-verse.vercel.app/opplex/live/340809.m3u8?uid=7971910783&pass=67383138
+#EXTINF:-1 tvg-id="" tvg-logo="https://m.media-amazon.com/images/M/MV5BNmFlODk2ZmEtMWE5MC00Nzg5LWE3ODMtMzViYTRhNjdjMjgzXkEyXkFqcGdeQXVyNjEyNjM1MjY@._V1_.jpg" group-title="INDIAN | KIDS Cartoon",24/7 Chacha Bhatija
+https://joker-verse.vercel.app/opplex/live/311774.m3u8?uid=7971910783&pass=67383138
+#EXTINF:-1 tvg-id="" tvg-logo="http://logo.opplextv.com/logo/WowKidsAction.png" group-title="INDIAN | KIDS Cartoon",24/7 Wow Kids Action
+https://joker-verse.vercel.app/opplex/live/314753.m3u8?uid=7971910783&pass=67383138
+#EXTINF:-1 tvg-id="" tvg-logo="http://logo.opplextv.com/logo/VirTheRobotBoy.png" group-title="INDIAN | KIDS Cartoon",24/7 Vir The Robot Boy
+https://joker-verse.vercel.app/opplex/live/314754.m3u8?uid=7971910783&pass=67383138
+#EXTINF:-1 tvg-id="" tvg-logo="https://upload.wikimedia.org/wikipedia/en/b/bd/Doraemon_character.png" group-title="INDIAN | KIDS Cartoon",24/7 KIDS | DORAEMON
+https://joker-verse.vercel.app/opplex/live/388459.m3u8?uid=7971910783&pass=67383138
+#EXTINF:-1 tvg-id="" tvg-logo="" group-title="INDIAN | KIDS Cartoon",KIDS: PINK PANTHER 24/7
+https://joker-verse.vercel.app/opplex/live/301503.m3u8?uid=7971910783&pass=67383138
+#EXTINF:-1 tvg-id="" tvg-logo="" group-title="INDIAN | KIDS Cartoon",KIDS: CHU CHU TV 24/7
+https://joker-verse.vercel.app/opplex/live/301502.m3u8?uid=7971910783&pass=67383138
+#EXTINF:-1 tvg-id="" tvg-logo="" group-title="INDIAN | KIDS Cartoon",KIDS: Sonic 24/7
+https://joker-verse.vercel.app/opplex/live/301500.m3u8?uid=7971910783&pass=67383138
+#EXTINF:-1 tvg-id="" tvg-logo="" group-title="INDIAN | KIDS Cartoon",KIDS: MR BEAN (CARTOON) 24/7
+https://joker-verse.vercel.app/opplex/live/301501.m3u8?uid=7971910783&pass=67383138
+#EXTINF:-1 tvg-id="" tvg-logo="" group-title="INDIAN | KIDS Cartoon",KIDS: CoComelon TV 24/7
+https://joker-verse.vercel.app/opplex/live/301499.m3u8?uid=7971910783&pass=67383138
+#EXTINF:-1 tvg-id="" tvg-logo="" group-title="INDIAN | KIDS Cartoon",24/7 Kids: All Hail King Julien_ Exiled
+https://joker-verse.vercel.app/opplex/live/301504.m3u8?uid=7971910783&pass=67383138
+#EXTINF:-1 tvg-id="" tvg-logo="" group-title="INDIAN | KIDS Cartoon",24/7 Kids: Rick And Morty
+https://joker-verse.vercel.app/opplex/live/301505.m3u8?uid=7971910783&pass=67383138
+#EXTINF:-1 tvg-id="" tvg-logo="" group-title="INDIAN | KIDS Cartoon",24/7 Kids: Masha and the Bear
+https://joker-verse.vercel.app/opplex/live/301506.m3u8?uid=7971910783&pass=67383138
+#EXTINF:-1 tvg-id="" tvg-logo="" group-title="INDIAN | KIDS Cartoon",24/7 Kids: Little Baby Bum
+https://joker-verse.vercel.app/opplex/live/301507.m3u8?uid=7971910783&pass=67383138
+#EXTINF:-1 tvg-id="" tvg-logo="" group-title="INDIAN | KIDS Cartoon",24/7 Kids: The Boss Baby_ Back in Business
+https://joker-verse.vercel.app/opplex/live/301508.m3u8?uid=7971910783&pass=67383138
+#EXTINF:-1 tvg-id="" tvg-logo="" group-title="INDIAN | KIDS Cartoon",24/7 Kids: Peppa Pig
+https://joker-verse.vercel.app/opplex/live/301509.m3u8?uid=7971910783&pass=67383138
+#EXTINF:-1 tvg-id="" tvg-logo="" group-title="INDIAN | KIDS Cartoon",24/7 Kids: Blippi
+https://joker-verse.vercel.app/opplex/live/301510.m3u8?uid=7971910783&pass=67383138
+#EXTINF:-1 tvg-id="" tvg-logo="" group-title="INDIAN | KIDS Cartoon",24/7 Kids: Kids: Gabby_s Dollhouse
+https://joker-verse.vercel.app/opplex/live/301511.m3u8?uid=7971910783&pass=67383138
+#EXTINF:-1 tvg-id="" tvg-logo="" group-title="INDIAN | KIDS Cartoon",Oggy and the Cockroaches Hindi
+https://joker-verse.vercel.app/opplex/live/308282.m3u8?uid=7971910783&pass=67383138
+#EXTINF:-1 tvg-id="" tvg-logo="https://upload.wikimedia.org/wikipedia/en/f/f9/Chhota_Bheem.jpg" group-title="INDIAN | KIDS Cartoon",24/7 Chhota Bheem
+https://joker-verse.vercel.app/opplex/live/315401.m3u8?uid=7971910783&pass=67383138
+#EXTINF:-1 tvg-id="" tvg-logo="https://w7.pngwing.com/pngs/28/710/png-transparent-tom-and-jerry-tom-and-jerry-heroes-logo-fictional-character.png" group-title="INDIAN | KIDS Cartoon",24/7 Tom & Jerry
+https://joker-verse.vercel.app/opplex/live/329247.m3u8?uid=7971910783&pass=67383138
+#EXTINF:-1 tvg-id="" tvg-logo="https://e7.pngegg.com/pngimages/578/87/png-clipart-scooby-doo-mystery-scooby-doo-velma-dinkley-youtube-scoobydoo-text-logo.png" group-title="INDIAN | KIDS Cartoon",24/7 Scooby-Doo
+https://joker-verse.vercel.app/opplex/live/329248.m3u8?uid=7971910783&pass=67383138
+#EXTINF:-1 tvg-id="" tvg-logo="" group-title="INDIAN | KIDS Cartoon",24/7 Booba
+https://joker-verse.vercel.app/opplex/live/340803.m3u8?uid=7971910783&pass=67383138
+#EXTINF:-1 tvg-id="" tvg-logo="" group-title="INDIAN | KIDS Cartoon",24/7 KIDS SONGS HINDI
+https://joker-verse.vercel.app/opplex/live/340802.m3u8?uid=7971910783&pass=67383138
+#EXTINF:-1 tvg-id="" tvg-logo="" group-title="INDIAN | KIDS Cartoon",24/7 BabyBus | Nursery Rhymes
+https://joker-verse.vercel.app/opplex/live/340804.m3u8?uid=7971910783&pass=67383138
+#EXTINF:-1 tvg-id="" tvg-logo="https://co4kids.org/sites/default/files/Kids%20247%20CMYK%20%281%29.png" group-title="INDIAN | KIDS Cartoon",24/7 KIDS | MOV HINDI
+https://joker-verse.vercel.app/opplex/live/362998.m3u8?uid=7971910783&pass=67383138
+#EXTINF:-1 tvg-id="" tvg-logo="https://co4kids.org/sites/default/files/Kids%20247%20CMYK%20%281%29.png" group-title="INDIAN | KIDS Cartoon",24/7 KIDS | MOVIES
+https://joker-verse.vercel.app/opplex/live/362999.m3u8?uid=7971910783&pass=67383138
+#EXTINF:-1 tvg-id="" tvg-logo="https://co4kids.org/sites/default/files/Kids%20247%20CMYK%20%281%29.png" group-title="INDIAN | KIDS Cartoon",24/7 KIDS | MOVIES ENG 01
+https://joker-verse.vercel.app/opplex/live/363000.m3u8?uid=7971910783&pass=67383138
+#EXTINF:-1 tvg-id="" tvg-logo="https://co4kids.org/sites/default/files/Kids%20247%20CMYK%20%281%29.png" group-title="INDIAN | KIDS Cartoon",24/7 KIDS | MOVIES ENG 02
+https://joker-verse.vercel.app/opplex/live/363001.m3u8?uid=7971910783&pass=67383138
+#EXTINF:-1 tvg-id="" tvg-logo="https://upload.wikimedia.org/wikipedia/fr/thumb/5/58/Logo_Cin%C3%A9box.svg/1200px-Logo_Cin%C3%A9box.svg.png" group-title="CINEBOX",•●★--- Welcome ----★●•
+https://joker-verse.vercel.app/opplex/live/236995.m3u8?uid=7971910783&pass=67383138

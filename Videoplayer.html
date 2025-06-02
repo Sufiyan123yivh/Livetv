@@ -148,61 +148,6 @@ body{
     vertical-align: middle; /* Align with text */
 }
 
-/* Message Box Styling */
-.message-box-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
-}
-.message-box-overlay.show {
-    opacity: 1;
-    visibility: visible;
-}
-.message-box-content {
-    background-color: #1a1a2e; /* Darker background for message box */
-    color: #fff;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-    text-align: center;
-    max-width: 400px;
-    width: 90%;
-    box-sizing: border-box;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-}
-.message-box-content h3 {
-    margin-bottom: 15px;
-    font-size: 1.5em;
-    color: #2debd4;
-}
-.message-box-content p {
-    margin-bottom: 25px;
-    line-height: 1.6;
-}
-.message-box-content button {
-    background-color: #34a853;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1em;
-    transition: background-color 0.3s ease;
-}
-.message-box-content button:hover {
-    background-color: #2b8e45;
-}
-
 /* Main content centering */
 .main-content {
     flex-grow: 1;
@@ -232,12 +177,6 @@ body{
         font-size: 0.95em;
         padding: 10px;
     }
-    .message-box-content {
-        padding: 20px;
-    }
-    .message-box-content h3 {
-        font-size: 1.3em;
-    }
 }
 
 @media (max-width: 480px) {
@@ -253,9 +192,6 @@ body{
     }
     .glass-panel button {
         padding: 8px;
-    }
-    .message-box-content {
-        padding: 15px;
     }
 }
 </style>
@@ -280,33 +216,15 @@ body{
         </div>
     </div>
     <br>
-    <div class="glass-panel" id="inputSection"> <div style="display: flex; justify-content: center; align-items: center; flex-wrap: wrap;">
+    <div class="glass-panel hidden" id="inputSection">
+        <div style="display: flex; justify-content: center; align-items: center; flex-wrap: wrap;">
+            <input type="text" placeholder="Enter MKV or MP4 Video URL"  name="mkvurl" id="mkvurl" style="flex-grow: 1;margin-right: 8px; min-width: 200px; margin-bottom: 10px;" />
             <button type="button" id="playbutton" onclick="loadVideo()"><span id="buttonText">Play Video</span><span id="spinner" style="display:none;"></span></button>
         </div>
     </div>
 </div>
 
-<div id="messageBoxOverlay" class="message-box-overlay">
-    <div class="message-box-content">
-        <h3 id="messageBoxTitle"></h3>
-        <p id="messageBoxText"></p>
-        <button onclick="hideMessageBox()">OK</button>
-    </div>
-</div>
-
 <script>
-// Function to display a custom message box
-function showMessageBox(title, message) {
-    document.getElementById('messageBoxTitle').innerText = title;
-    document.getElementById('messageBoxText').innerText = message;
-    document.getElementById('messageBoxOverlay').classList.add('show');
-}
-
-// Function to hide the custom message box
-function hideMessageBox() {
-    document.getElementById('messageBoxOverlay').classList.remove('show');
-}
-
 // Function to load and play the video from the URL
 function loadVideo(videoUrlFromParam = '') { // Added a parameter for URL from query string
   var videoUrl = videoUrlFromParam || document.getElementById('mkvurl').value.trim(); // Use param or input field
@@ -316,10 +234,7 @@ function loadVideo(videoUrlFromParam = '') { // Added a parameter for URL from q
   var spinner = document.getElementById("spinner");
 
   if (videoUrl.length === 0) {
-    // Only show message if no URL from param and input is empty
-    if (!videoUrlFromParam) {
-        showMessageBox('Input Required', 'Please enter a video URL to play.');
-    }
+    console.log('Input Required: Please enter a video URL to play.');
     return;
   }
 
@@ -335,8 +250,7 @@ function loadVideo(videoUrlFromParam = '') { // Added a parameter for URL from q
 
   // Determine video type based on extension (simple heuristic)
   let videoType = '';
-  // Be careful with query parameters in the URL itself (like ?download)
-  const cleanUrl = videoUrl.split('?')[0].toLowerCase(); // Get URL before any query params
+  const cleanUrl = videoUrl.split('?')[0].toLowerCase();
   if (cleanUrl.endsWith('.mkv')) {
       videoType = 'video/x-matroska';
   } else if (cleanUrl.endsWith('.mp4')) {
@@ -344,7 +258,6 @@ function loadVideo(videoUrlFromParam = '') { // Added a parameter for URL from q
   } else if (cleanUrl.endsWith('.webm')) {
       videoType = 'video/webm';
   }
-  // Add more types if needed
 
   // Create a source element for the video
   const sourceElement = document.createElement('source');
@@ -362,9 +275,7 @@ function loadVideo(videoUrlFromParam = '') { // Added a parameter for URL from q
 
   if (playPromise !== undefined) {
     playPromise.then(_ => {
-      // Video started playing successfully
       console.log('Video started playing.');
-      // Revert button state after a short delay or on 'canplay' event
       player.addEventListener('canplay', function handler() {
         playButton.disabled = false;
         buttonText.innerHTML = "Play Video";
@@ -373,16 +284,13 @@ function loadVideo(videoUrlFromParam = '') { // Added a parameter for URL from q
       }, {once: true});
     })
     .catch(error => {
-      // Playback failed (e.g., due to CORS, unsupported format, user gesture required)
       console.error('Video playback failed:', error);
-      showMessageBox('Playback Error', 'Could not play the video. This might be due to an invalid URL, unsupported format, server restrictions (CORS), or browser autoplay policies. Please try manually clicking play.');
-      // Revert button state immediately on error
+      console.log('Playback Error: Could not play the video. This might be due to an invalid URL, unsupported format, server restrictions (CORS), or browser autoplay policies. Please try manually clicking play.');
       playButton.disabled = false;
       buttonText.innerHTML = "Play Video";
       spinner.style.display = "none";
     });
   } else {
-    // Fallback for browsers that don't return a Promise from play()
     console.log('Video play initiated (no promise returned).');
     player.addEventListener('canplay', function handler() {
         playButton.disabled = false;
@@ -445,10 +353,10 @@ window.addEventListener("load", function(){
         // If 'url' parameter exists, load the video automatically
         document.getElementById('mkvurl').value = videoUrlFromParam; // Populate the input field
         loadVideo(videoUrlFromParam); // Call loadVideo with the URL from parameter
-        inputSection.classList.add('hidden'); // Hide the input field and button
+        inputSection.classList.add('hidden'); // Ensure it's hidden even if JS runs later
     } else {
-        // If no 'url' parameter, ensure input section is visible (default)
-        inputSection.classList.remove('hidden');
+        // If no 'url' parameter, ensure input section is visible (default) - REMOVED THIS TO KEEP IT HIDDEN
+        // inputSection.classList.remove('hidden'); // COMMENTED OUT
     }
 }, false);
 </script>

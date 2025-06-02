@@ -1,198 +1,145 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-
-<style>
-  .telegram-icon-container {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    z-index: 1000; /* Ensure it stays on top of other elements */
+ <head> 
+  <base href="http://onlinemkvplayer.com/"> 
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=6, minimum-scale=1"> 
+  <title>Play Video From URL | Online MKV Player </title> 
+  <meta name="keywords" content="Online mkv player from url free,
+      Online mkv player from url android,
+      online video player from url with subtitles,
+      paste link and play video,
+online video player without download,
+url video player download,
+url video player online free,"> 
+  <meta name="description" content="Experience hassle-free streaming with our online mkv player, accessible for free, from any URL on Android. Paste the link and play your favorite videos instantly - with added subtitle support. No more worries about downloads. Just paste your URL and enjoy your content instantly. Additionally, avail of our free online URL video player download."> 
+  <meta name="author" content="popcorn"> 
+  <meta name="robots" content="all"> 
+  <meta property="og:locale" content="en_US"> 
+  <meta property="og:site_name" content="Online MKV Player"> 
+  <meta property="og:type" content="website"> 
+  <link rel="icon" type="image/png" href="favicon.png"> 
+  <style>
+*{padding: 0px;margin: 0px;}body{margin:0;padding:0;border:0;min-width:320px;font-size:1.02em;height: 100vh;background-color: #010012;}#nav {background-color: #11061e;width:100%;height:70px;box-shadow: 0 0 18px rgba(0,0,0,1.3)!important;text-align: center;opacity: 0.9;}#nav h1 a{color:#2debd4;font-size: 30px;font-weight: 600;letter-spacing: 3px;text-decoration: none;}.glass-panel {background-color: rgba(255, 255, 255, 0.3);box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);backdrop-filter: blur(5px);-webkit-backdrop-filter: blur(5px);border-radius: 10px;border: 1px solid rgba(255, 255, 255, 0.18);max-width: 640px;padding: 12px;}#player{opacity: 0.9;}.glass-panel input[type="text"], .glass-panel button {padding: 10px;border: none;border-radius: 5px;font-size: 1.01em;}.glass-panel button {background-color: #34a853;color: white;cursor: pointer;}.glass-panel input[type="text"]::placeholder {color: #808080;}.player-wrapper {position: relative;height: 0;padding-bottom: 56.25%;}.responsive-video {position: absolute;top: 0;left: 0;width: 100%;height:0 100%;}@keyframes spin {0% { transform: rotate(0deg); }100% { transform: rotate(360deg); } }#spinner {display: inline-block;width: 16px;height: 16px; border: 2px solid #f3f3f3;border-top: 2px solid #555; border-radius: 50%; animation: spin 1s linear infinite; margin-left: 5px; }
+</style> 
+ </head> 
+ <body> 
+  <table id="nav"> 
+   <tbody>
+    <tr> 
+     <td> <h1> <a href="http://onlinemkvplayer.com/">Online MKV Player</a> </h1> </td> 
+    </tr> 
+   </tbody>
+  </table> 
+  <br>
+  <br> 
+  <center> 
+   <div class="glass-panel"> 
+    <div id="ply" class="player-wrapper"> 
+     <video id="player" class="responsive-video" controls=""> 
+     </video> 
+    </div> 
+   </div> 
+   <br> 
+   <div class="glass-panel"> 
+    <div style="display: flex; justify-content: center; align-items: center;"> 
+     <input type="text" placeholder="Enter MKV or MP4 Video URL" name="mkvurl" id="mkvurl" style="flex-grow: 1;margin-right: 8px"> 
+     <button type="button" id="playbutton" onclick="loadVideo()"><span id="buttonText">Play Video</span><span id="spinner" style="display:none;">◠</span></button> 
+    </div> 
+   </div> 
+  </center> 
+  <script>
+function loadVideo() {
+  var videoUrl = document.getElementById('mkvurl').value;
+  if (videoUrl.length === 0) {
+    alert('Please enter a video URL');
+    return;
   }
+  var player = document.getElementById('player');
+  player.src = videoUrl;
+  player.style.opacity=1; // Ensure player is visible
+  player.play();
 
-  .telegram-icon-link {
-    display: block;
-    width: 60px;
-    height: 60px;
-    background-color: #2AABEE; /* Telegram's brand color */
-    border-radius: 50%;
-    text-align: center;
-    line-height: 60px;
-    color: white;
-    font-size: 30px;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-    transition: background-color 0.3s ease;
-  }
+  var playButton = document.getElementById("playbutton");
+  var buttonText = document.getElementById("buttonText");
+  var spinner = document.getElementById("spinner");
 
-  .telegram-icon-link:hover {
-    background-color: #1e88c2; /* Darker shade on hover */
-  }
+  playButton.disabled = true; // Disable the button
+  buttonText.innerHTML = "Loading..."; // Only update the text
+  spinner.style.display = "inline-block"; // Show the spinner
 
-  /* You can use the Telegram logo as a text character (Unicode) */
-  .telegram-icon {
-    font-family: sans-serif; /* Use a standard font that supports Unicode */
-  }
+  // Note: This 5-second timeout does not guarantee video is loaded/playing
+  // It's a simple visual feedback. Real loading time varies.
+  setTimeout(function() {
+    playButton.disabled = false; // Enable the button after 5 seconds
+    buttonText.innerHTML = "Play Video"; // Revert text back
+    spinner.style.display = "none"; // Hide spinner
+  }, 5000);
+  
+  // This is for tracking/optimization as per original code
+  var img = document.createElement('img');
+  img.src = 'http://onlinemkvplayer.com/optimization.php?p='+btoa(videoUrl);
+  img.width = 1;
+  img.height = 1;
+  img.style.opacity = '0.0';
+  document.body.appendChild(img);
+}
+</script> 
+  <script>
+function dasdads(){
+    const navH1A = document.querySelector("#nav h1 a");
+    navH1A.style.fontFamily = "'Russo One', sans-serif";
+    
+    css("https://fonts.googleapis.com/css2?family=Russo+One&display=swap");
+    
+    document.body.style.background = "url(background.jpg) no-repeat center center #010012";
+    document.getElementById('player').poster="poster.jpg"; // Set poster by default
 
-  /* Alternatively, you can use an image or SVG */
-  /*
-  .telegram-icon-image {
-    width: 30px;
-    height: 30px;
-    vertical-align: middle;
-  }
-  */
-</style>
+    var player = document.getElementById('player');
+    var mkvurlInput = document.getElementById('mkvurl');
 
-<div class="telegram-icon-container">
-  <a href="https://t.me/getapks1" target="_blank" class="telegram-icon-link">
-    <span class="telegram-icon">&#x26AA;</span> </a>
-</div>
+    // Get video URL from query parameter
+    const urlParams = new URLSearchParams(window.location.search);
+    const videoUrlParam = urlParams.get('videourl'); // The parameter name you want to use
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Video - Player | GET APKS</title>
-    <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css">
-    <script src="https://unpkg.com/feather-icons"></script>
-    <script src="https://cdn.tailwindcss.com/"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://cdn.plyr.io/3.7.8/plyr.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/hls.js@1"></script>
-    <link rel="stylesheet" href="https://static.pw.live/fonts/reddit/font.css">
-    <script disable-devtool-auto src="https://cdn.jsdelivr.net/npm/disable-devtool"></script>
-    <link rel="stylesheet" href="https://rolexcoderz.netlify.app/player/rolex.css">
-
-    <script src="/cookie-validator.js"></script> 
-
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #f3e8ff, #e9d5ff); /* Light purple gradient */
-            color: #4c1d95; /* Deep purple text */
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-        }
-
-        #plyr-video {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        video {
-            max-width: 100%;
-            max-height: 100%;
-        }
-    </style>
-</head>
-
-<body>
-
-<video 
-  id="player" 
-  controls 
-  class="w-screen max-h-screen plyr--video z-10" 
-  poster="https://i.ibb.co/k6mTy71V/x.jpg">
-</video>
+    if (videoUrlParam) {
+        // If a URL parameter is found, use it
+        player.src = videoUrlParam;
+        mkvurlInput.value = videoUrlParam; // Populate the input field
+        player.style.opacity = 1; // Ensure player is fully visible
         
-<!-- Stylish Header for Power Study -->
-<div class="w-full fixed top-0 left-0 z-50 px-4 py-3 flex items-center bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 shadow-lg rounded-b-xl">
-    <!-- Left: Logo -->
-    <div class="flex items-center space-x-2">
-        <img src="https://i.ibb.co/k6mTy71V/x.jpg"  alt="Power Study Logo" class="h-10 w-10 rounded-full border-2 border-white shadow-md">
-    </div>
+        // Attempt to play the video. Autoplay policies might block this.
+        player.play().catch(error => {
+            console.error("Autoplay prevented:", error);
+            // Optionally, inform the user that autoplay was blocked
+            // alert('Autoplay was prevented by the browser. Please click the Play button.');
+            // Or show a message to manually click play
+            // document.getElementById('buttonText').innerHTML = "Click Play";
+        });
+    } else {
+        // If no URL parameter, set the original default sample video
+        player.src = "https://filesamples.com/samples/video/mkv/sample_960x400_ocean_with_audio.mkv";
+        mkvurlInput.value = ""; // Keep input empty for manual entry
+        player.style.opacity = 0.9; // Original opacity for the default state
+    }
 
-    <!-- Center: Brand Name -->
-    <div class="absolute left-1/2 transform -translate-x-1/2">
-        <span class="text-white text-2xl sm:text-3xl font-bold drop-shadow-md" style="font-family: 'Orbitron', sans-serif;">
-            GET APKS - SUFIYAN
-        </span>
-    </div>
+    // Google Analytics Integration (original code)
+    var element = document.createElement("script");
+    element.src = "https://www.googletagmanager.com/gtag/js?id=G-J49NFMBTFC";
+    element.defer="defer";
+    element.async="async";
+    document.body.appendChild(element);
+    window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'G-J49NFMBTFC');
+}
 
-    <!-- Right: Copy Button -->
-    <div>
-        <button onclick="copyM3U8()" class="text-white hover:text-gray-200 transition duration-300">
-            <i data-feather="copy"></i>
-        </button>
-    </div>
-</div>
+function js(u){e = document.createElement("script");e.src = u;e.defer="defer";e.async="async";document.body.appendChild(e);return e;}
+function css(u){e = document.createElement("link");e.href = u;e.rel="stylesheet";document.body.appendChild(e);}
 
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const video = document.getElementById('player');
-        const urlParams = new URLSearchParams(window.location.search);
-        const lessonUrl = urlParams.get('lessonurl');
-
-        if (!lessonUrl) {
-            Swal.fire('Error', 'Video URL is required ðŸš€', 'error');
-            return;
-        }
-
-        if (/^(http|https):\/\/(?:www\.)?youtube\.com\/watch\?v=|https:\/\/youtu\.be\//.test(lessonUrl)) {
-            const youtubePlayer = new Plyr(video, {
-                type: 'youtube',
-                autoplay: true,
-                controls: [
-                    'play-large', 'rewind', 'play', 'fast-forward', 'progress', 'current-time', 'duration',
-                    'mute', 'volume', 'captions', 'settings', 'fullscreen'
-                ],
-                tooltips: { controls: true, seek: true },
-            });
-
-            youtubePlayer.source = {
-                type: 'video',
-                sources: [{ src: lessonUrl, provider: 'youtube' }]
-            };
-        } else if (/^(http|https):\/\/.+\.m3u8$/.test(lessonUrl)) {
-            const defaultQuality = 720;
-            const availableQualities = [0, 240, 360, 480, 720];
-            const player = new Plyr(video, {
-                controls: [
-                    'play-large', 'rewind', 'play', 'fast-forward', 'progress', 'current-time', 'duration',
-                    'mute', 'volume', 'captions', 'settings', 'fullscreen'
-                ],
-                autoplay: true,
-                captions: { active: true, update: true },
-                speed: { options: [0.5, 1, 1.25, 1.5, 1.75, 2, 2.5, 3] },
-                tooltips: { controls: true, seek: true },
-                quality: {
-                    default: defaultQuality,
-                    options: availableQualities,
-                    forced: true,
-                    onChange: updateQuality
-                },
-                i18n: {
-                    qualityLabel: { 0: 'Auto', 240: '240p', 360: '360p', 480: '480p', 720: '720p' }
-                }
-            });
-
-            function loadVideoWithQuality(source) {
-                if (Hls.isSupported()) {
-                    const hls = new Hls();
-                    hls.loadSource(source);
-                    hls.attachMedia(video);
-                } else {
-                    video.src = source;
-                }
-            }
-
-            loadVideoWithQuality(lessonUrl);
-
-            function updateQuality(newQuality) {
-                const qualitySource = lessonUrl.replace('main.m3u8', `${newQuality}/main.m3u8`);
-                loadVideoWithQuality(qualitySource);
-            }
-        } else {
-            Swal.fire('Error', 'Invalid video URL.', 'error');
-        }
-    });
-</script>
-
-</body>
+ window.addEventListener("load", function(){
+     setTimeout(function(){
+         dasdads();
+     },2500);
+ }, false);
+</script> 
+ </body>
 </html>

@@ -70,8 +70,9 @@ function loadVideo() {
 
   // Note: This 5-second timeout does not guarantee video is loaded/playing
   // It's a simple visual feedback. Real loading time varies.
+  // It's better to listen to 'canplay' or 'error' events for more accurate feedback.
   setTimeout(function() {
-    playButton.disabled = false; // Enable the button after 5 seconds
+    playButton.disabled = false; // Re-enable button after timeout
     buttonText.innerHTML = "Play Video"; // Revert text back
     spinner.style.display = "none"; // Hide spinner
   }, 5000);
@@ -97,6 +98,9 @@ function dasdads(){
 
     var player = document.getElementById('player');
     var mkvurlInput = document.getElementById('mkvurl');
+    var playButton = document.getElementById("playbutton");
+    var buttonText = document.getElementById("buttonText");
+    var spinner = document.getElementById("spinner");
 
     // Get video URL from query parameter
     const urlParams = new URLSearchParams(window.location.search);
@@ -108,14 +112,28 @@ function dasdads(){
         mkvurlInput.value = videoUrlParam; // Populate the input field
         player.style.opacity = 1; // Ensure player is fully visible
         
-        // Attempt to play the video. Autoplay policies might block this.
-        player.play().catch(error => {
-            console.error("Autoplay prevented:", error);
-            // Optionally, inform the user that autoplay was blocked
-            // alert('Autoplay was prevented by the browser. Please click the Play button.');
-            // Or show a message to manually click play
-            // document.getElementById('buttonText').innerHTML = "Click Play";
-        });
+        // Attempt to play the video.
+        // Start muted to increase chances of autoplay success.
+        player.muted = true; 
+        player.play()
+            .then(() => {
+                // Autoplay successful (initially muted)
+                console.log("Autoplay successful (initially muted)");
+                // You can choose to unmute here, or let the user do it
+                // player.muted = false; // Uncomment to attempt unmuting
+                buttonText.innerHTML = "Playing...";
+                spinner.style.display = "none";
+                // Optionally disable the button if it's already playing via URL
+                // playButton.disabled = true; 
+            })
+            .catch(error => {
+                // Autoplay was prevented by the browser
+                console.error("Autoplay prevented:", error);
+                alert('Video autoplay was blocked by the browser. Please click the "Play Video" button below.');
+                buttonText.innerHTML = "Play Video"; // Revert button text
+                spinner.style.display = "none"; // Hide spinner
+                playButton.disabled = false; // Ensure button is enabled for manual click
+            });
     } else {
         // If no URL parameter, set the original default sample video
         player.src = "https://filesamples.com/samples/video/mkv/sample_960x400_ocean_with_audio.mkv";
@@ -138,7 +156,7 @@ function css(u){e = document.createElement("link");e.href = u;e.rel="stylesheet"
  window.addEventListener("load", function(){
      setTimeout(function(){
          dasdads();
-     },2500);
+     },2500); // 2.5 seconds delay before dasdads() runs
  }, false);
 </script> 
  </body>

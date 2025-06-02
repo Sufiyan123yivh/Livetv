@@ -159,10 +159,16 @@ body{
     box-sizing: border-box;
 }
 
-/* Hide the input/button section initially if auto-playing */
+/* NEW CLASS TO ALWAYS HIDE AN ELEMENT */
+.always-hidden {
+    display: none !important;
+}
+
+/* Hide the input/button section initially if auto-playing (now redundant if always-hidden is used) */
 .input-section.hidden {
     display: none !important;
 }
+
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
@@ -216,7 +222,7 @@ body{
         </div>
     </div>
     <br>
-    <div class="glass-panel hidden" id="inputSection">
+    <div class="glass-panel always-hidden" id="inputSection">
         <div style="display: flex; justify-content: center; align-items: center; flex-wrap: wrap;">
             <input type="text" placeholder="Enter MKV or MP4 Video URL"  name="mkvurl" id="mkvurl" style="flex-grow: 1;margin-right: 8px; min-width: 200px; margin-bottom: 10px;" />
             <button type="button" id="playbutton" onclick="loadVideo()"><span id="buttonText">Play Video</span><span id="spinner" style="display:none;"></span></button>
@@ -226,22 +232,21 @@ body{
 
 <script>
 // Function to load and play the video from the URL
-function loadVideo(videoUrlFromParam = '') { // Added a parameter for URL from query string
-  var videoUrl = videoUrlFromParam || document.getElementById('mkvurl').value.trim(); // Use param or input field
+function loadVideo(videoUrlFromParam = '') {
+  // If the input box is hidden, videoUrl will primarily come from videoUrlFromParam
+  var videoUrl = videoUrlFromParam || ''; // No longer try to get from input field if it's always hidden
+
   var player = document.getElementById('player');
-  var playButton = document.getElementById("playbutton");
-  var buttonText = document.getElementById("buttonText");
-  var spinner = document.getElementById("spinner");
+  // Removed references to playButton, buttonText, spinner as they are in the hidden section
+  // If you want loading indicators elsewhere, you'd need new elements for them.
 
   if (videoUrl.length === 0) {
-    console.log('Input Required: Please enter a video URL to play.');
+    console.log('No video URL provided via parameter.');
     return;
   }
 
-  // Set loading state
-  playButton.disabled = true;
-  buttonText.innerHTML = "Loading...";
-  spinner.style.display = "inline-block";
+  // No need to set loading state on playButton if it's hidden.
+  // If you want a global loading state, create new elements for it.
 
   // Clear existing sources before setting a new one
   while (player.firstChild) {
@@ -267,45 +272,24 @@ function loadVideo(videoUrlFromParam = '') { // Added a parameter for URL from q
   }
   player.appendChild(sourceElement);
 
-  player.load(); // Load the new source
+  player.load();
   player.style.opacity = 1;
 
-  // Attempt to play the video. Play() returns a Promise.
   var playPromise = player.play();
 
   if (playPromise !== undefined) {
     playPromise.then(_ => {
       console.log('Video started playing.');
-      player.addEventListener('canplay', function handler() {
-        playButton.disabled = false;
-        buttonText.innerHTML = "Play Video";
-        spinner.style.display = "none";
-        player.removeEventListener('canplay', handler);
-      }, {once: true});
+      // No button state to revert here if the button is always hidden
     })
     .catch(error => {
       console.error('Video playback failed:', error);
-      console.log('Playback Error: Could not play the video. This might be due to an invalid URL, unsupported format, server restrictions (CORS), or browser autoplay policies. Please try manually clicking play.');
-      playButton.disabled = false;
-      buttonText.innerHTML = "Play Video";
-      spinner.style.display = "none";
+      console.log('Playback Error: Could not play the video. This might be due to an invalid URL, unsupported format, server restrictions (CORS), or browser autoplay policies.');
+      // No button state to revert here if the button is always hidden
     });
   } else {
     console.log('Video play initiated (no promise returned).');
-    player.addEventListener('canplay', function handler() {
-        playButton.disabled = false;
-        buttonText.innerHTML = "Play Video";
-        spinner.style.display = "none";
-        player.removeEventListener('canplay', handler);
-    }, {once: true});
-
-    setTimeout(() => {
-        if (playButton.disabled) {
-            playButton.disabled = false;
-            buttonText.innerHTML = "Play Video";
-            spinner.style.display = "none";
-        }
-    }, 5000);
+    // No button state to revert here if the button is always hidden
   }
 }
 
@@ -343,21 +327,17 @@ function dasdads(){
 
 // --- NEW CODE FOR URL PARAMETER HANDLING ---
 window.addEventListener("load", function(){
-    dasdads(); // Call the original load function
+    dasdads();
 
     const urlParams = new URLSearchParams(window.location.search);
     const videoUrlFromParam = urlParams.get('url');
-    const inputSection = document.getElementById('inputSection'); // Get the input section
+    // Removed: const inputSection = document.getElementById('inputSection'); as it's no longer needed for hiding/showing
 
     if (videoUrlFromParam) {
-        // If 'url' parameter exists, load the video automatically
-        document.getElementById('mkvurl').value = videoUrlFromParam; // Populate the input field
-        loadVideo(videoUrlFromParam); // Call loadVideo with the URL from parameter
-        inputSection.classList.add('hidden'); // Ensure it's hidden even if JS runs later
-    } else {
-        // If no 'url' parameter, ensure input section is visible (default) - REMOVED THIS TO KEEP IT HIDDEN
-        // inputSection.classList.remove('hidden'); // COMMENTED OUT
+        loadVideo(videoUrlFromParam);
+        // Removed: inputSection.classList.add('hidden'); as it's always hidden now
     }
+    // Removed the else block entirely as the input section is permanently hidden.
 }, false);
 </script>
 

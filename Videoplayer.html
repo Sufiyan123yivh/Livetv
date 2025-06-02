@@ -368,6 +368,10 @@ function loadVideo(videoUrlFromParam = '') { // Added a parameter for URL from q
         player.removeEventListener('canplay', handler);
       }, {once: true});
     })
+    .catch(error => {
+      // Playback failed (e.g., due to CORS, unsupported format, user gesture required)
+      console.error('Video playback failed:', error);
+      showMessageBox('Playback Error', 'Could not play the video. This might be due to an invalid URL, unsupported format, server restrictions (CORS), or browser autoplay policies. Please try manually clicking play.');
       // Revert button state immediately on error
       playButton.disabled = false;
       buttonText.innerHTML = "Play Video";

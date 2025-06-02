@@ -1,110 +1,408 @@
+<!DOCTYPE html>
 <html lang="en">
- <head> 
-  <meta charset="UTF-8"> 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-  <title>Simple MKV Player</title> 
-  <style>
-        body {
-            font-family: sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background-color: #1a1a1a;
-            color: #fff;
-            margin: 0;
-        }
-        .video-container {
-            max-width: 90%;
-            width: 800px; /* Max width for the player */
-            background-color: #000;
-            border-radius: 8px;
-            overflow: hidden; /* Ensures video stays within rounded corners */
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-        }
-        video {
-            display: block;
-            width: 100%;
-            height: auto;
-        }
-        .controls-panel {
-            padding: 15px;
-            background-color: #333;
-            text-align: center;
-            border-top: 1px solid #444;
-        }
-        .controls-panel input[type="text"] {
-            width: calc(100% - 100px);
-            padding: 8px;
-            border: 1px solid #555;
-            border-radius: 4px;
-            background-color: #222;
-            color: #eee;
-            margin-right: 10px;
-        }
-        .controls-panel button {
-            padding: 8px 15px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 1em;
-        }
-        .controls-panel button:hover {
-            background-color: #0056b3;
-        }
-    </style> 
- </head> 
- <body> 
-  <div class="video-container"> 
-   <video id="mkvPlayer" controls="" poster="https://i.ibb.co/k6mTy71V/x.jpg"> 
-    <source src="https://filesamples.com/samples/video/mkv/sample_960x400_ocean_with_audio.mkv" type="video/x-matroska"> 
-    <p>Your browser does not support the video tag or the MKV format directly.</p> 
-   </video> 
-   <div class="controls-panel"> 
-    <input type="text" id="videoUrlInput" placeholder="Paste MKV/MP4 Video URL here"> 
-    <button onclick="loadCustomVideo()">Load Video</button> 
-   </div> 
-  </div> 
-  <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const player = document.getElementById('mkvPlayer');
-            const videoUrlInput = document.getElementById('videoUrlInput');
+<head>
+<base href="http://onlinemkvplayer.com/" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=6, minimum-scale=1">
+<title>Play Video From URL | Online MKV Player </title>
 
-            // Function to load video from input field
-            window.loadCustomVideo = function() {
-                const url = videoUrlInput.value.trim();
-                if (url) {
-                    player.src = url;
-                    // Attempt to play. Autoplay might be blocked.
-                    player.play().catch(error => {
-                        console.error("Autoplay failed:", error);
-                        alert("Video autoplay was blocked by your browser. Please click the play button on the video player directly.");
-                    });
-                } else {
-                    alert("Please enter a video URL.");
-                }
-            };
+<meta name="keywords" content="Online mkv player from url free,
+      Online mkv player from url android,
+      online video player from url with subtitles,
+      paste link and play video,
+online video player without download,
+url video player download,
+url video player online free," />
+<meta name="description" content="Experience hassle-free streaming with our online mkv player, accessible for free, from any URL on Android. Paste the link and play your favorite videos instantly - with added subtitle support. No more worries about downloads. Just paste your URL and enjoy your content instantly. Additionally, avail of our free online URL video player download." />
+<meta name="author" content="popcorn" />
+<meta name="robots" content="all" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:site_name" content="Online MKV Player" />
+<meta property="og:type" content="website" />
+<link rel="icon" type="image/png" href="favicon.png"/>
+<style>
+/* Basic reset and body styling */
+*{padding: 0px;margin: 0px;}
+body{
+    margin:0;
+    padding:0;
+    border:0;
+    min-width:320px;
+    font-size:1.02em;
+    height: 100vh;
+    background-color: #010012;
+    font-family: 'Inter', sans-serif; /* Using Inter font */
+    display: flex;
+    flex-direction: column;
+}
 
-            // Optional: Load video from URL parameter if present on page load
-            const urlParams = new URLSearchParams(window.location.search);
-            const paramUrl = urlParams.get('videourl'); // e.g., yourpage.html?videourl=http://example.com/video.mkv
+/* Navigation bar styling */
+#nav {
+    background-color: #11061e;
+    width:100%;
+    height:70px;
+    box-shadow: 0 0 18px rgba(0,0,0,1.3)!important;
+    text-align: center;
+    opacity: 0.9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#nav h1 a{
+    color:#2debd4;
+    font-size: 30px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-decoration: none;
+}
 
-            if (paramUrl) {
-                videoUrlInput.value = paramUrl; // Populate input field
-                player.src = paramUrl;
-                // Attempt to play, often muted autoplay is allowed for initial load
-                player.muted = true; // Start muted for better autoplay chances
-                player.play().then(() => {
-                    console.log("Video playing automatically (possibly muted).");
-                    // player.muted = false; // Uncomment if you want to immediately unmute after successful autoplay
-                }).catch(error => {
-                    console.error("Autoplay failed:", error);
-                    alert("Video autoplay was blocked by your browser. Please click the play button on the video player directly.");
-                });
-            }
-        });
-    </script> 
- </body>
+/* Glass panel effect for containers */
+.glass-panel {
+    background-color: rgba(255, 255, 255, 0.15); /* Slightly less opaque for better visibility */
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    backdrop-filter: blur(8px); /* Increased blur for more effect */
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    max-width: 640px;
+    padding: 20px; /* Increased padding */
+    margin: 10px auto; /* Centering and spacing */
+    width: 90%; /* Responsive width */
+    box-sizing: border-box; /* Include padding in width */
+}
+
+/* Video player opacity */
+#player{
+    opacity: 0.9;
+    border-radius: 8px; /* Rounded corners for player */
+}
+
+/* Input and button styling within glass panel */
+.glass-panel input[type="text"], .glass-panel button {
+    padding: 12px; /* Increased padding */
+    border: none;
+    border-radius: 8px; /* More rounded corners */
+    font-size: 1.05em; /* Slightly larger font */
+    outline: none; /* Remove outline on focus */
+}
+.glass-panel button {
+    background-color: #34a853;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitions */
+}
+.glass-panel button:hover {
+    background-color: #2b8e45;
+    transform: translateY(-2px); /* Slight lift on hover */
+}
+.glass-panel button:active {
+    transform: translateY(0);
+}
+.glass-panel button:disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
+}
+.glass-panel input[type="text"]::placeholder {
+    color: #a0a0a0; /* Lighter placeholder text */
+}
+
+/* Responsive video wrapper */
+.player-wrapper {
+    position: relative;
+    height: 0;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    background-color: #000; /* Black background for video area */
+    border-radius: 10px; /* Match glass panel border-radius */
+    overflow: hidden; /* Hide overflow for rounded corners */
+}
+.responsive-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Ensure video fits within bounds */
+}
+
+/* Spinner animation */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+#spinner {
+    display: inline-block;
+    width: 18px; /* Slightly larger spinner */
+    height: 18px;
+    border: 3px solid rgba(255, 255, 255, 0.3); /* Lighter border */
+    border-top: 3px solid #fff; /* White top border */
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-left: 8px;
+    vertical-align: middle; /* Align with text */
+}
+
+/* Message Box Styling */
+.message-box-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+.message-box-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+.message-box-content {
+    background-color: #1a1a2e; /* Darker background for message box */
+    color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+    box-sizing: border-box;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+.message-box-content h3 {
+    margin-bottom: 15px;
+    font-size: 1.5em;
+    color: #2debd4;
+}
+.message-box-content p {
+    margin-bottom: 25px;
+    line-height: 1.6;
+}
+.message-box-content button {
+    background-color: #34a853;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+}
+.message-box-content button:hover {
+    background-color: #2b8e45;
+}
+
+/* Main content centering */
+.main-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    #nav h1 a {
+        font-size: 24px;
+        letter-spacing: 2px;
+    }
+    .glass-panel {
+        padding: 15px;
+    }
+    .glass-panel input[type="text"], .glass-panel button {
+        font-size: 0.95em;
+        padding: 10px;
+    }
+    .message-box-content {
+        padding: 20px;
+    }
+    .message-box-content h3 {
+        font-size: 1.3em;
+    }
+}
+
+@media (max-width: 480px) {
+    #nav h1 a {
+        font-size: 20px;
+        letter-spacing: 1px;
+    }
+    .glass-panel {
+        padding: 10px;
+    }
+    .glass-panel input[type="text"] {
+        margin-right: 5px;
+    }
+    .glass-panel button {
+        padding: 8px;
+    }
+    .message-box-content {
+        padding: 15px;
+    }
+}
+</style>
+</head>
+<body>
+<table id="nav">
+    <tr>
+        <td>
+            <h1>
+                <a href="http://onlinemkvplayer.com/">Online MKV Player</a>
+            </h1>
+        </td>
+    </tr>
+</table>
+
+<div class="main-content">
+    <div class="glass-panel">
+        <div id="ply" class="player-wrapper">
+            <video id="player" class="responsive-video" controls>
+                Your browser does not support the video tag.
+            </video>
+        </div>
+    </div>
+    <br>
+    <div class="glass-panel">
+        <div style="display: flex; justify-content: center; align-items: center; flex-wrap: wrap;">
+            <input type="text" placeholder="Enter MKV or MP4 Video URL"  name="mkvurl" id="mkvurl" style="flex-grow: 1;margin-right: 8px; min-width: 200px; margin-bottom: 10px;" />
+            <button type="button" id="playbutton" onclick="loadVideo()"><span id="buttonText">Play Video</span><span id="spinner" style="display:none;"></span></button>
+        </div>
+    </div>
+</div>
+
+<div id="messageBoxOverlay" class="message-box-overlay">
+    <div class="message-box-content">
+        <h3 id="messageBoxTitle"></h3>
+        <p id="messageBoxText"></p>
+        <button onclick="hideMessageBox()">OK</button>
+    </div>
+</div>
+
+<script>
+// Function to display a custom message box
+function showMessageBox(title, message) {
+    document.getElementById('messageBoxTitle').innerText = title;
+    document.getElementById('messageBoxText').innerText = message;
+    document.getElementById('messageBoxOverlay').classList.add('show');
+}
+
+// Function to hide the custom message box
+function hideMessageBox() {
+    document.getElementById('messageBoxOverlay').classList.remove('show');
+}
+
+// Function to load and play the video from the URL
+function loadVideo() {
+  var videoUrl = document.getElementById('mkvurl').value.trim(); // Trim whitespace
+  var player = document.getElementById('player');
+  var playButton = document.getElementById("playbutton");
+  var buttonText = document.getElementById("buttonText");
+  var spinner = document.getElementById("spinner");
+
+  if (videoUrl.length === 0) {
+    showMessageBox('Input Required', 'Please enter a video URL to play.');
+    return;
+  }
+
+  // Set loading state
+  playButton.disabled = true;
+  buttonText.innerHTML = "Loading...";
+  spinner.style.display = "inline-block";
+
+  player.src = videoUrl;
+  player.style.opacity = 1;
+
+  // Attempt to play the video. Play() returns a Promise.
+  var playPromise = player.play();
+
+  if (playPromise !== undefined) {
+    playPromise.then(_ => {
+      // Video started playing successfully
+      console.log('Video started playing.');
+      // Revert button state after a short delay or on 'canplay' event
+      setTimeout(() => {
+        playButton.disabled = false;
+        buttonText.innerHTML = "Play Video";
+        spinner.style.display = "none";
+      }, 1000); // Give it a moment to start
+    })
+    .catch(error => {
+      // Playback failed (e.g., due to CORS, unsupported format, user gesture required)
+      console.error('Video playback failed:', error);
+      showMessageBox('Playback Error', 'Could not play the video. This might be due to an invalid URL, unsupported format, or server restrictions (CORS).');
+      // Revert button state immediately on error
+      playButton.disabled = false;
+      buttonText.innerHTML = "Play Video";
+      spinner.style.display = "none";
+    });
+  } else {
+    // Fallback for browsers that don't return a Promise from play()
+    console.log('Video play initiated (no promise returned).');
+    setTimeout(() => {
+        playButton.disabled = false;
+        buttonText.innerHTML = "Play Video";
+        spinner.style.display = "none";
+    }, 3000); // A longer timeout as we don't have a promise to track
+  }
+}
+
+// Function to load external JavaScript files
+function js(u){
+    let e = document.createElement("script");
+    e.src = u;
+    e.defer = true; // Use defer for non-blocking scripts
+    e.async = true; // Use async for non-blocking scripts
+    document.body.appendChild(e);
+    return e;
+}
+
+// Function to load external CSS files
+function css(u){
+    let e = document.createElement("link");
+    e.href = u;
+    e.rel = "stylesheet";
+    document.head.appendChild(e); // Append to head for stylesheets
+}
+
+// Function to perform actions after initial load
+function dasdads(){
+    const navH1A = document.querySelector("#nav h1 a");
+    if (navH1A) {
+        navH1A.style.fontFamily = "'Russo One', sans-serif";
+    }
+
+    css("https://fonts.googleapis.com/css2?family=Russo+One&display=swap");
+    css("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"); // Load Inter font
+
+    // Set background image and poster image if they exist
+    // Note: These paths are relative to the base URL (http://onlinemkvplayer.com/)
+    // Ensure these files are available at that location.
+    document.body.style.background = "url(background.jpg) no-repeat center center #010012";
+    document.body.style.backgroundSize = "cover"; // Ensure background covers the area
+    document.getElementById('player').poster = "poster.jpg";
+
+    // Google Analytics integration
+    js("https://www.googletagmanager.com/gtag/js?id=G-J49NFMBTFC");
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-J49NFMBTFC');
+}
+
+// Event listener for window load
+window.addEventListener("load", function(){
+     // Delay dasdads execution slightly to ensure DOM is ready
+     setTimeout(function(){
+         dasdads();
+     }, 500); // Reduced delay as critical elements are already in HTML
+}, false);
+</script>
+
+</body>
 </html>

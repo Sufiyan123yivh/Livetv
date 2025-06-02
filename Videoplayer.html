@@ -279,11 +279,6 @@ body{
             </video>
         </div>
     </div>
-    <br>
-    <div class="glass-panel" id="inputSection"> <div style="display: flex; justify-content: center; align-items: center; flex-wrap: wrap;">
-            <input type="text" placeholder="Enter MKV or MP4 Video URL"  name="mkvurl" id="mkvurl" style="flex-grow: 1;margin-right: 8px; min-width: 200px; margin-bottom: 10px;" />
-            <button type="button" id="playbutton" onclick="loadVideo()"><span id="buttonText">Play Video</span><span id="spinner" style="display:none;"></span></button>
-        </div>
     </div>
 </div>
 
@@ -373,10 +368,6 @@ function loadVideo(videoUrlFromParam = '') { // Added a parameter for URL from q
         player.removeEventListener('canplay', handler);
       }, {once: true});
     })
-    .catch(error => {
-      // Playback failed (e.g., due to CORS, unsupported format, user gesture required)
-      console.error('Video playback failed:', error);
-      showMessageBox('Playback Error', 'Could not play the video. This might be due to an invalid URL, unsupported format, server restrictions (CORS), or browser autoplay policies. Please try manually clicking play.');
       // Revert button state immediately on error
       playButton.disabled = false;
       buttonText.innerHTML = "Play Video";

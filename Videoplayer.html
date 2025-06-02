@@ -20,6 +20,12 @@ url video player online free," />
 <meta property="og:site_name" content="Online MKV Player" />
 <meta property="og:type" content="website" />
 <link rel="icon" type="image/png" href="favicon.png"/>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Russo+One&display=swap" rel="stylesheet">
+
+
 <style>
 /* Basic reset and body styling */
 *{padding: 0px;margin: 0px;}
@@ -54,6 +60,7 @@ body{
     font-weight: 600;
     letter-spacing: 3px;
     text-decoration: none;
+    font-family: 'Russo One', sans-serif; /* Apply Russo One directly */
 }
 
 /* Glass panel effect for containers */
@@ -207,6 +214,11 @@ body{
     box-sizing: border-box;
 }
 
+/* Hide the input/button section initially if auto-playing */
+.input-section.hidden {
+    display: none !important;
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
     #nav h1 a {
@@ -268,8 +280,7 @@ body{
         </div>
     </div>
     <br>
-    <div class="glass-panel">
-        <div style="display: flex; justify-content: center; align-items: center; flex-wrap: wrap;">
+    <div class="glass-panel" id="inputSection"> <div style="display: flex; justify-content: center; align-items: center; flex-wrap: wrap;">
             <input type="text" placeholder="Enter MKV or MP4 Video URL"  name="mkvurl" id="mkvurl" style="flex-grow: 1;margin-right: 8px; min-width: 200px; margin-bottom: 10px;" />
             <button type="button" id="playbutton" onclick="loadVideo()"><span id="buttonText">Play Video</span><span id="spinner" style="display:none;"></span></button>
         </div>
@@ -298,15 +309,18 @@ function hideMessageBox() {
 }
 
 // Function to load and play the video from the URL
-function loadVideo() {
-  var videoUrl = document.getElementById('mkvurl').value.trim(); // Trim whitespace
+function loadVideo(videoUrlFromParam = '') { // Added a parameter for URL from query string
+  var videoUrl = videoUrlFromParam || document.getElementById('mkvurl').value.trim(); // Use param or input field
   var player = document.getElementById('player');
   var playButton = document.getElementById("playbutton");
   var buttonText = document.getElementById("buttonText");
   var spinner = document.getElementById("spinner");
 
   if (videoUrl.length === 0) {
-    showMessageBox('Input Required', 'Please enter a video URL to play.');
+    // Only show message if no URL from param and input is empty
+    if (!videoUrlFromParam) {
+        showMessageBox('Input Required', 'Please enter a video URL to play.');
+    }
     return;
   }
 
@@ -315,7 +329,33 @@ function loadVideo() {
   buttonText.innerHTML = "Loading...";
   spinner.style.display = "inline-block";
 
-  player.src = videoUrl;
+  // Clear existing sources before setting a new one
+  while (player.firstChild) {
+      player.removeChild(player.firstChild);
+  }
+
+  // Determine video type based on extension (simple heuristic)
+  let videoType = '';
+  // Be careful with query parameters in the URL itself (like ?download)
+  const cleanUrl = videoUrl.split('?')[0].toLowerCase(); // Get URL before any query params
+  if (cleanUrl.endsWith('.mkv')) {
+      videoType = 'video/x-matroska';
+  } else if (cleanUrl.endsWith('.mp4')) {
+      videoType = 'video/mp4';
+  } else if (cleanUrl.endsWith('.webm')) {
+      videoType = 'video/webm';
+  }
+  // Add more types if needed
+
+  // Create a source element for the video
+  const sourceElement = document.createElement('source');
+  sourceElement.src = videoUrl;
+  if (videoType) {
+      sourceElement.type = videoType;
+  }
+  player.appendChild(sourceElement);
+
+  player.load(); // Load the new source
   player.style.opacity = 1;
 
   // Attempt to play the video. Play() returns a Promise.
@@ -326,16 +366,17 @@ function loadVideo() {
       // Video started playing successfully
       console.log('Video started playing.');
       // Revert button state after a short delay or on 'canplay' event
-      setTimeout(() => {
+      player.addEventListener('canplay', function handler() {
         playButton.disabled = false;
         buttonText.innerHTML = "Play Video";
         spinner.style.display = "none";
-      }, 1000); // Give it a moment to start
+        player.removeEventListener('canplay', handler);
+      }, {once: true});
     })
     .catch(error => {
       // Playback failed (e.g., due to CORS, unsupported format, user gesture required)
       console.error('Video playback failed:', error);
-      showMessageBox('Playback Error', 'Could not play the video. This might be due to an invalid URL, unsupported format, or server restrictions (CORS).');
+      showMessageBox('Playback Error', 'Could not play the video. This might be due to an invalid URL, unsupported format, server restrictions (CORS), or browser autoplay policies. Please try manually clicking play.');
       // Revert button state immediately on error
       playButton.disabled = false;
       buttonText.innerHTML = "Play Video";
@@ -344,11 +385,20 @@ function loadVideo() {
   } else {
     // Fallback for browsers that don't return a Promise from play()
     console.log('Video play initiated (no promise returned).');
-    setTimeout(() => {
+    player.addEventListener('canplay', function handler() {
         playButton.disabled = false;
         buttonText.innerHTML = "Play Video";
         spinner.style.display = "none";
-    }, 3000); // A longer timeout as we don't have a promise to track
+        player.removeEventListener('canplay', handler);
+    }, {once: true});
+
+    setTimeout(() => {
+        if (playButton.disabled) {
+            playButton.disabled = false;
+            buttonText.innerHTML = "Play Video";
+            spinner.style.display = "none";
+        }
+    }, 5000);
   }
 }
 
@@ -356,38 +406,27 @@ function loadVideo() {
 function js(u){
     let e = document.createElement("script");
     e.src = u;
-    e.defer = true; // Use defer for non-blocking scripts
-    e.async = true; // Use async for non-blocking scripts
+    e.defer = true;
+    e.async = true;
     document.body.appendChild(e);
     return e;
 }
 
-// Function to load external CSS files
+// Function to load external CSS files (not strictly needed here but kept for completeness)
 function css(u){
     let e = document.createElement("link");
     e.href = u;
     e.rel = "stylesheet";
-    document.head.appendChild(e); // Append to head for stylesheets
+    document.head.appendChild(e);
+    return e;
 }
 
 // Function to perform actions after initial load
 function dasdads(){
-    const navH1A = document.querySelector("#nav h1 a");
-    if (navH1A) {
-        navH1A.style.fontFamily = "'Russo One', sans-serif";
-    }
-
-    css("https://fonts.googleapis.com/css2?family=Russo+One&display=swap");
-    css("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"); // Load Inter font
-
-    // Set background image and poster image if they exist
-    // Note: These paths are relative to the base URL (http://onlinemkvplayer.com/)
-    // Ensure these files are available at that location.
     document.body.style.background = "url(background.jpg) no-repeat center center #010012";
-    document.body.style.backgroundSize = "cover"; // Ensure background covers the area
+    document.body.style.backgroundSize = "cover";
     document.getElementById('player').poster = "poster.jpg";
 
-    // Google Analytics integration
     js("https://www.googletagmanager.com/gtag/js?id=G-J49NFMBTFC");
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
@@ -395,12 +434,23 @@ function dasdads(){
     gtag('config', 'G-J49NFMBTFC');
 }
 
-// Event listener for window load
+// --- NEW CODE FOR URL PARAMETER HANDLING ---
 window.addEventListener("load", function(){
-     // Delay dasdads execution slightly to ensure DOM is ready
-     setTimeout(function(){
-         dasdads();
-     }, 500); // Reduced delay as critical elements are already in HTML
+    dasdads(); // Call the original load function
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const videoUrlFromParam = urlParams.get('url');
+    const inputSection = document.getElementById('inputSection'); // Get the input section
+
+    if (videoUrlFromParam) {
+        // If 'url' parameter exists, load the video automatically
+        document.getElementById('mkvurl').value = videoUrlFromParam; // Populate the input field
+        loadVideo(videoUrlFromParam); // Call loadVideo with the URL from parameter
+        inputSection.classList.add('hidden'); // Hide the input field and button
+    } else {
+        // If no 'url' parameter, ensure input section is visible (default)
+        inputSection.classList.remove('hidden');
+    }
 }, false);
 </script>
 

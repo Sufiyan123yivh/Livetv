@@ -233,7 +233,7 @@
       const mobile = mobileInput.value.trim();
       if (!otp) return alert("Enter OTP");
       showSpinner();
-      const res = await fetch('app/verify_otp.php', {
+      const res = await fetch('/verify_otp.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: `mobile=${mobile}&otp=${otp}`
@@ -273,7 +273,7 @@
 
     document.getElementById('logoutBtn').addEventListener('click', async () => {
       showSpinner();
-      const res = await fetch('app/logout.php', { method: 'POST' });
+      const res = await fetch('/logout.php', { method: 'POST' });
       const text = await res.text();
       hideSpinner();
       showToast(text);

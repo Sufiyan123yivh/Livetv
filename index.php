@@ -183,7 +183,7 @@
         splash.remove();
         app.style.display = 'block';
 
-        const res = await fetch('app/check_login.php');
+        const res = await fetch('/check_login.php');
         const { exists } = await res.json();
         if (exists) {
           loginUI.classList.add('hidden');
@@ -198,7 +198,7 @@
       const mobile = mobileInput.value.trim();
       if (!/^\d{10}$/.test(mobile)) return alert("Enter valid 10-digit mobile");
       showSpinner();
-      const res = await fetch('app/send_otp.php', {
+      const res = await fetch('/send_otp.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: `mobile=${mobile}`
